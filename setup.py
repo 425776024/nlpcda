@@ -12,7 +12,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="nlpts",
-    version="0.1",
+    version="0.0.1",
     keywords=("pip", "nlptool", "nlpts", "nlp"),
     description="A Text Summarization tool",
     long_description="A (Chinese) NLP Text Summarization toll",
