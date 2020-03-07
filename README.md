@@ -1,1 +1,13 @@
-# A (Chinese) NLP Text Summarization
+# NLP Chinese Data Augmentation 一键中文数据增强工具
+
+---
+
+一键中文数据增强工具，支持：
+- 随机实体替换
+- 近义词
+- 近义近音字替换
+- 随机字删除
+
+在不改变原文的情况下生成指定数量的训练语料文本
+
+Email:425776024@qq.com
