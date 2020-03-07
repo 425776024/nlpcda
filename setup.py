@@ -14,7 +14,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="nlpcda",
-    version="1.2.2",
+    version="1.3",
     keywords=("pip", "nlptool", "nlpcda", "nlp"),
     description="NLP Chinese Data Augmentation，一键中文数据增强工具",
     long_description=open('README.rst').read(),
