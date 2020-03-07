@@ -10,14 +10,16 @@
 
 from setuptools import setup, find_packages
 
-
+with open("README.md", "r",encoding='utf-8') as fh:
+    long_description = fh.read()
 
 setup(
     name="nlpcda",
-    version="1.3.2",
+    version="1.3.3",
     keywords=("pip", "nlptool", "nlpcda", "nlp"),
-    description="NLP Chinese Data Augmentation，一键中文数据增强工具",
-    long_description=open('README.rst',encoding='utf-8').read(),
+    description="NLP Chinese Data Augmentation .一键中文数据增强",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     license="MIT Licence",
 
     url="https://github.com/425776024/nlpcda",

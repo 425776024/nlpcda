@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 from nlpcda.tools.randomword import Randomword
 from nlpcda.tools.similarword import Similarword
 from nlpcda.tools.homophone import Homophone
