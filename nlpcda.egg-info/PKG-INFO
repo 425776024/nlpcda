@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: nlpcda
-Version: 1.3.3
+Version: 1.3.4
 Summary: NLP Chinese Data Augmentation .一键中文数据增强
 Home-page: https://github.com/425776024/nlpcda
 Author: Jiang.XinFa
@@ -20,9 +20,13 @@ Description: # NLP Chinese Data Augmentation 一键中文数据增强工具
         - 近义近音字替换
         - 随机字删除
         
-        在不改变原文的情况下生成指定数量的训练语料文本
+        ## 意义
+        - 在不改变原文语义，的情况下生成指定数量的训练语料文本
+        - 对NLP模型的泛化性能、对抗攻击、干扰波动，有很好的提升作用
+        - 参考比赛：https://www.biendata.com/competition/2019diac/
         
-        Email:425776024@qq.com
+        
+        作者：Email:425776024@qq.com
         
         ---
         ## API
