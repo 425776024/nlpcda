@@ -1,5 +1,5 @@
 MANIFEST.in
-README.rst
+README.md
 setup.py
 nlpcda/__init__.py
 nlpcda/config.py
