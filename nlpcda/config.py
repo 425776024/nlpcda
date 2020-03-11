@@ -10,3 +10,5 @@ similarword_path = root_path + '/data/同义词.txt'
 
 random_path = root_path + '/data/company.txt'
 company_path = root_path + '/data/company.txt'
+
+quick_start_path = root_path + '/data/quick_start.txt'

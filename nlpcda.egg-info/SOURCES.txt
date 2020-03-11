@@ -10,7 +10,7 @@ nlpcda.egg-info/dependency_links.txt
 nlpcda.egg-info/requires.txt
 nlpcda.egg-info/top_level.txt
 nlpcda/data/company.txt
-nlpcda/data/反意字.txt
+nlpcda/data/quick_start.txt
 nlpcda/data/同义词.txt
 nlpcda/data/同音意字.txt
 nlpcda/tools/Basetool.py

@@ -1,16 +1,11 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# @Time    : 2020/3/5 1:57 PM
-# @Author  : xinfa.jiang
-# @Site    : 
-# @File    : Basetool.py
-# @Software: PyCharm
-
-import random
-import jieba as jieba
-from nlpcda.config import company_path
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
+import random
+from nlpcda.config import company_path
+
+import jieba as t_jieba
+
 
 class Basetool:
     def __init__(self, base_file, create_num=5, change_rate=0.1, seed=1):
@@ -19,9 +14,9 @@ class Basetool:
         self.base_file = base_file
         self.create_num = create_num
         self.change_rate = change_rate
+        self.jieba = t_jieba
+        self.loop_t = 2
         self.base_file_mapobj = self.load_paser_base_file()
-        self.jieba = jieba
-        self.jieba.load_userdict(company_path)
 
     def set_userdict(self, txt_path):
         '''
@@ -30,7 +25,6 @@ class Basetool:
         :return:
         '''
         self.jieba.load_userdict(txt_path)
-        self.jieba.add_word()
 
     def add_word(self, word: str):
         '''

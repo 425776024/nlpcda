@@ -25,7 +25,7 @@ class Randomword(Basetool):
         replace_str = replace_str.replace('\n', '').strip()
         seg_list = self.jieba.cut(replace_str, cut_all=False)
         words = list(seg_list)
-        sentences = [replace_str]
+        sentences = set([replace_str])
         if len(words) <= 3:
             return sentences
         t = 0
@@ -35,11 +35,10 @@ class Randomword(Basetool):
             for word in words:
                 a_sentence += self.s1(word)
 
-            if a_sentence not in sentences:
-                sentences.append(a_sentence)
-            if t > self.create_num * 5 / self.change_rate:
+            sentences.update([a_sentence])
+            if t > self.create_num * self.loop_t / self.change_rate:
                 break
-        return sentences
+        return list(sentences)
 
     def s1(self, word):
         # 替换所有在combine_dict中的
