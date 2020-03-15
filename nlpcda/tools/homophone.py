@@ -27,7 +27,7 @@ class Homophone(Basetool):
     def replace(self, replace_str):
         replace_str = replace_str.replace('\n', '').strip()
         words = list(replace_str)
-        sentences = set([replace_str])
+        sentences = [replace_str]
         t = 0
         while len(sentences) < self.create_num:
             t += 1
@@ -39,10 +39,11 @@ class Homophone(Basetool):
                 else:
                     place = word
                 a_sentence += place
-            sentences.update([a_sentence])
+            if a_sentence not in sentences:
+                sentences.append(a_sentence)
             if t > self.create_num * self.loop_t / self.change_rate:
                 break
-        return list(sentences)
+        return sentences
 
 
 def test(test_str, create_num=10, change_rate=0.3):

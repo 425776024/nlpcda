@@ -12,7 +12,7 @@ class Similarword(Basetool):
 
     def __init__(self, base_file=similarword_path, create_num=5, change_rate=0.05, seed=1):
         super(Similarword, self).__init__(base_file, create_num, change_rate, seed)
-        self.set_userdict(company_path)
+
 
     def load_paser_base_file(self):
         combine_dict = {}
@@ -31,7 +31,7 @@ class Similarword(Basetool):
         replace_str = replace_str.replace('\n', '').strip()
         seg_list = self.jieba.cut(replace_str, cut_all=False)
         words = list(seg_list)
-        sentences = set([replace_str])
+        sentences = [replace_str]
         t = 0
         while len(sentences) < self.create_num:
             t += 1
@@ -39,10 +39,11 @@ class Similarword(Basetool):
             for word in words:
                 a_sentence += self.s1(word)
 
-            sentences.update([a_sentence])
+            if a_sentence not in sentences:
+                sentences.append(a_sentence)
             if t > self.create_num * self.loop_t / self.change_rate:
                 break
-        return list(sentences)
+        return sentences
 
     def s1(self, word):
         # 替换所有在combine_dict中的

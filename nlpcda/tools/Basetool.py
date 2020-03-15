@@ -15,6 +15,7 @@ class Basetool:
         self.create_num = create_num
         self.change_rate = change_rate
         self.jieba = t_jieba
+        self.set_userdict(company_path)
         self.loop_t = 2
         self.base_file_mapobj = self.load_paser_base_file()
 

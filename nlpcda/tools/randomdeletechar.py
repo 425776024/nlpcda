@@ -15,7 +15,7 @@ class RandomDeleteChar(Basetool):
         replace_str = replace_str.replace('\n', '').strip()
         seg_list = self.jieba.cut(replace_str, cut_all=False)
         words = list(seg_list)
-        sentences = set([replace_str])
+        sentences = [replace_str]
         if len(words) <= 3:
             return sentences
         t = 0
@@ -31,10 +31,11 @@ class RandomDeleteChar(Basetool):
                     word_pre = words[i - 1]
                     a_sentence += self.s1(word_pre, word, word_back)
 
-            sentences.update([a_sentence])
+            if a_sentence not in sentences:
+                sentences.append(a_sentence)
             if t > self.create_num * self.loop_t / self.change_rate:
                 break
-        return list(sentences)
+        return sentences
 
     def is_int(self, s):
         try:
