@@ -5,6 +5,7 @@ from nlpcda.tools.randomword import Randomword
 from nlpcda.tools.similarword import Similarword
 from nlpcda.tools.homophone import Homophone
 from nlpcda.tools.randomdeletechar import RandomDeleteChar
+from nlpcda.tools.ner import Ner
 from nlpcda.config import quick_start_path
 
 
@@ -49,6 +50,15 @@ def test_RandomDeleteChar(test_str, create_num=3, change_rate=0.1):
     return smw.replace(test_str)
 
 
+def test_ner():
+    ner = Ner(ner_dir_name='write',
+              ignore_tag_list=['O', 'T'],
+              data_augument_tag_list=['Cause', 'Effect'],
+              augument_size=3, seed=0)
+    data_sentence_arrs, data_label_arrs = ner.augment('write/0.txt')
+    print(data_sentence_arrs, data_label_arrs)
+
+
 def quick_start():
     with open(quick_start_path, 'r', encoding='utf-8') as f:
         print(f.read())
@@ -75,6 +85,6 @@ def test():
         print(s)
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
     # quick_start()
-    test()
+    # test_ner()
