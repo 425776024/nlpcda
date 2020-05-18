@@ -164,9 +164,10 @@ for s in rs1:
 
 ### NER命名实体 数据增强
 输入标注好的NER数据目录，和需要增强的标注文件路径，和增强的数量，即可一键增强
-参数：
+
+Ner类参数：
 - ner_dir_name='ner_data' : 在ner数据放在ner_data目录下（里面很多.txt）
-- - ner_dir_name提供的目录下是各种标注数据文件，文件内容以标准的NER 的BIO格式分开：
+- ner_dir_name提供的目录下是各种标注数据文件，文件内容以标准的NER 的BIO格式分开：
 > 字1 \t TAG
 >
 > 北 \t B-LOC
@@ -186,7 +187,12 @@ for s in rs1:
 - data_augument_tag_list=['P', 'LOC'] : 只对P、LOC标签的实体做增强
 - augument_size=3 : 每条标注数据，最多新增强数量
 - seed=0 : 随机种子/ 可缺省
-使用API：
+
+调用函数augment()参数
+- file_name: 1条标注训练文件的路径，如0.txt
+- ner.augment(file_name='0.txt')
+
+例子：
 ```python
 from nlpcda.tools.ner import Ner
 
@@ -194,7 +200,7 @@ ner = Ner(ner_dir_name='ner_data',
         ignore_tag_list=['O'],
         data_augument_tag_list=['P', 'LOC','ORG'],
         augument_size=3, seed=0),
-data_sentence_arrs, data_label_arrs = ner.augment('write/0.txt')
+data_sentence_arrs, data_label_arrs = ner.augment(file_name='0.txt')
 # 3条增强后的句子、标签 数据，len(data_sentence_arrs)==3
 # 你可以写文件输出函数，用于写出，作为后续训练等
 print(data_sentence_arrs, data_label_arrs)
