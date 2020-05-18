@@ -186,6 +186,8 @@ for s in rs1:
 - seed=0 : 随机种子/ 可缺省
 使用API：
 ```python
+from nlpcda.tools.ner import Ner
+
 ner = Ner(ner_dir_name='ner_data',
         ignore_tag_list=['O'],
         data_augument_tag_list=['P', 'LOC','ORG'],
