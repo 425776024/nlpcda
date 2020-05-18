@@ -1,7 +1,9 @@
 # NLP Chinese Data Augmentation 一键中文数据增强工具
 
 使用：`pip install nlpcda`
+
 pypi:https://pypi.org/project/nlpcda/
+
 ---
 
 ## 介绍
