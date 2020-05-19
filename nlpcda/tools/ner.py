@@ -110,7 +110,13 @@ class Ner:
         label_arr = []
         for i in range(len(ner_data)):
             for j in range(len(ner_data[i][1])):
-                label_arr.append(ner_data[i][0])
+                if ner_data[i][0] == 'O':
+                    label_arr.append(ner_data[i][0])
+                else:
+                    if j == 0:
+                        label_arr.append('B-' + ner_data[i][0])
+                    else:
+                        label_arr.append('I-' + ner_data[i][0])
                 sentence_arr.append(ner_data[i][1][j])
         return sentence_arr, label_arr
 
@@ -123,7 +129,7 @@ class Ner:
         org_data = list(self.__get_file_data_iter(file_name))
         new_datas = self.__data_augment(org_data, self.size)
         data_sentence_arrs = []
-        data_label_arrs= []
+        data_label_arrs = []
         for ndi in new_datas:
             sentence_arr, label_arr = self.__paser_ner(ndi)
             data_sentence_arrs.append(sentence_arr)
