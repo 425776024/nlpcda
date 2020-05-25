@@ -26,7 +26,7 @@ pypi:https://pypi.org/project/nlpcda/
 ## 意义
 - 在不改变原文语义的情况下，生成指定数量的训练语料文本
 - 对NLP模型的泛化性能、对抗攻击、干扰波动，有很好的提升作用
-- 参考比赛：https://www.biendata.com/competition/2019diac/
+- 参考比赛(本人用此策略+base bert拿到：50+-/1000)：https://www.biendata.com/competition/2019diac/
 
 
 
