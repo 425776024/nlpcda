@@ -27,6 +27,8 @@ pypi:https://pypi.org/project/nlpcda/
 - [基于lasertagger做中文文本数据增强](https://github.com/tongchangD/text_data_enhancement_with_LaserTagger)
 - [An implement of the paper of EDA for Chinese corpus.中文语料的EDA数据增强工具。NLP数据增强。论文阅读笔记。](https://github.com/zhanlaoban/EDA_NLP_for_Chinese)
 
+## 在看的文章
+- [NLP中数据增强的综述，快速的生成大量的训练数据](https://mp.weixin.qq.com/s/Ey24ZEAgFEl9ZN0jw2y76g)
 
 ## 意义
 - 在不改变原文语义的情况下，生成指定数量的训练语料文本
