@@ -23,6 +23,11 @@ pypi:https://pypi.org/project/nlpcda/
 - 2.基于Word2Vec、BERT等词向量的词语近距离的替换、MASK猜测置换
 - 3.引入TF-IDF、TextRank等，可以选择：替换/不替换关键词
 
+## 观摩中的github
+- [基于lasertagger做中文文本数据增强](https://github.com/tongchangD/text_data_enhancement_with_LaserTagger)
+- [An implement of the paper of EDA for Chinese corpus.中文语料的EDA数据增强工具。NLP数据增强。论文阅读笔记。](https://github.com/zhanlaoban/EDA_NLP_for_Chinese)
+
+
 ## 意义
 - 在不改变原文语义的情况下，生成指定数量的训练语料文本
 - 对NLP模型的泛化性能、对抗攻击、干扰波动，有很好的提升作用
