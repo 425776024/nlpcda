@@ -19,9 +19,10 @@ pypi:https://pypi.org/project/nlpcda/
 
 ## 计划中的未来内容
 
-- 1.翻译互转实现的增强
-- 2.基于Word2Vec、BERT等词向量的词语近距离的替换、MASK猜测置换
-- 3.引入TF-IDF、TextRank等，可以选择：替换/不替换关键词
+- 随机置换邻近的字：**研表究明，汉字序顺并不定一影响文字的阅读理解**
+- 翻译互转实现的增强
+- 基于Word2Vec、BERT等词向量的词语近距离的替换、MASK猜测置换
+- 引入TF-IDF、TextRank等，可以选择：替换/不替换关键词
 
 ## 观摩中的github
 - [基于lasertagger做中文文本数据增强](https://github.com/tongchangD/text_data_enhancement_with_LaserTagger)
