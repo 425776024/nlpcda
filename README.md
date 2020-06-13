@@ -19,7 +19,8 @@ pypi:https://pypi.org/project/nlpcda/
 
 ## 计划中的未来内容
 
-- 随机置换邻近的字：**研表究明，汉字序顺并不定一影响文字的阅读理解**
+- 随机置换邻近的字：**研表究明，汉字序顺并不定一影响文字的阅读理解**<<是乱序的
+- 基于LaserTagger的文本复述，输入A，用句子B去复述它，B尽量和A语义一致
 - 翻译互转实现的增强
 - 基于Word2Vec、BERT等词向量的词语近距离的替换、MASK猜测置换
 - 引入TF-IDF、TextRank等，可以选择：替换/不替换关键词
@@ -38,8 +39,6 @@ pypi:https://pypi.org/project/nlpcda/
 - 参考比赛(本人用此策略+base bert拿到：50+-/1000)：https://www.biendata.com/competition/2019diac/
 
 
-
-作者：Email:425776024@qq.com
 
 ---
 ## API
