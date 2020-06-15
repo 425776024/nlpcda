@@ -2,6 +2,8 @@
 
 使用：`pip install nlpcda`
 
+开源不易，欢迎 star🌟
+
 pypi:https://pypi.org/project/nlpcda/
 
 ---
