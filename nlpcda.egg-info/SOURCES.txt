@@ -16,6 +16,7 @@ nlpcda/data/同音意字.txt
 nlpcda/tools/Basetool.py
 nlpcda/tools/__init__.py
 nlpcda/tools/homophone.py
+nlpcda/tools/ner.py
 nlpcda/tools/randomdeletechar.py
 nlpcda/tools/randomword.py
 nlpcda/tools/similarword.py

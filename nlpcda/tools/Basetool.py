@@ -8,7 +8,7 @@ import jieba as t_jieba
 
 
 class Basetool:
-    def __init__(self, base_file, create_num=5, change_rate=0.1, seed=1):
+    def __init__(self, base_file: str, create_num: int = 5, change_rate: float = 0.1, seed: int = 1):
         self.random = random
         self.random.seed(seed)
         self.base_file = base_file
@@ -19,7 +19,7 @@ class Basetool:
         self.loop_t = 2
         self.base_file_mapobj = self.load_paser_base_file()
 
-    def set_userdict(self, txt_path):
+    def set_userdict(self, txt_path:str):
         '''
         设置你自己的用户字典
         :param txt_path:

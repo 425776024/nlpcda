@@ -3,15 +3,16 @@
 
 from nlpcda.tools.Basetool import Basetool
 
+
 class RandomDeleteChar(Basetool):
     '''
     随机字删除，【字级别的】，增强数据
     '''
 
-    def __init__(self, create_num=5, change_rate=0.05, seed=1):
+    def __init__(self, create_num: int = 5, change_rate: float = 0.05, seed: int = 1):
         super(RandomDeleteChar, self).__init__('', create_num, change_rate, seed)
 
-    def replace(self, replace_str):
+    def replace(self, replace_str: str):
         replace_str = replace_str.replace('\n', '').strip()
         seg_list = self.jieba.cut(replace_str, cut_all=False)
         words = list(seg_list)
@@ -37,14 +38,14 @@ class RandomDeleteChar(Basetool):
                 break
         return sentences
 
-    def is_int(self, s):
+    def is_int(self, s: str):
         try:
             is_int = int(s)
             return True
         except:
             return False
 
-    def s1(self, word_pre, word, word_back):
+    def s1(self, word_pre: str, word: str, word_back: str):
         # 词不删
         if len(word) > 1: return word
         # 字是数字 不删

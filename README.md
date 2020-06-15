@@ -14,14 +14,24 @@ pypi:https://pypi.org/project/nlpcda/
 - 3.近义近音字替换
 - 4.随机字删除（内部细节：数字时间日期片段，内容不会删）
 - 5.`新增`：NER类 `BIO` 数据增强
+- 6.`新增` 随机置换邻近的字：**研表究明，汉字序顺并不定一影响文字的阅读理解**<<是乱序的
 
 `经过细节特殊处理，尽量保证不改变原文语义。即使改变也能被猜出来、能被猜出来、能被踩出来、能被菜粗来、被菜粗、能菜粗来`
 
 ## 计划中的未来内容
 
-- 1.翻译互转实现的增强
-- 2.基于Word2Vec、BERT等词向量的词语近距离的替换、MASK猜测置换
-- 3.引入TF-IDF、TextRank等，可以选择：替换/不替换关键词
+- 基于LaserTagger的文本复述，输入A，用句子B去复述它，B尽量和A语义一致
+- 翻译互转实现的增强
+- 基于Word2Vec、BERT等词向量的词语近距离的替换、MASK猜测置换
+- 引入TF-IDF、TextRank等，可以选择：替换/不替换关键词
+
+## 观摩中的github
+- [基于lasertagger做中文文本数据增强](https://github.com/tongchangD/text_data_enhancement_with_LaserTagger)
+- [An implement of the paper of EDA for Chinese corpus.中文语料的EDA数据增强工具。NLP数据增强。论文阅读笔记。](https://github.com/zhanlaoban/EDA_NLP_for_Chinese)
+- [Data augmentation for NLP](https://github.com/makcedward/nlpaug)
+
+## 在看的文章
+- [NLP中数据增强的综述，快速的生成大量的训练数据](https://mp.weixin.qq.com/s/Ey24ZEAgFEl9ZN0jw2y76g)
 
 ## 意义
 - 在不改变原文语义的情况下，生成指定数量的训练语料文本
@@ -30,12 +40,10 @@ pypi:https://pypi.org/project/nlpcda/
 
 
 
-作者：Email:425776024@qq.com
-
 ---
 ## API
 
-### 随机(等价)实体替换
+### 1.随机(等价)实体替换
 
 参数：
 - base_file ：缺省时使用内置（公司）实体。对公司实体进行替换
@@ -49,7 +57,7 @@ pypi:https://pypi.org/project/nlpcda/
 - seed ： 随机种子
 
 ```python
-from nlpcda.tools.randomword import Randomword
+from nlpcda import Randomword
 
 test_str = '''这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击'''
 
@@ -68,7 +76,7 @@ for s in rs1:
 
 ```
 
-### 随机同义词替换
+### 2.随机同义词替换
 参数：
 - base_file ：缺省时使用内置同义词表，你可以设定/自己指定更加丰富的同义词表：
     > 是文本文件路径，内容形如（空格隔开）：\
@@ -81,7 +89,7 @@ for s in rs1:
 - seed ： 随机种子
 
 ```python
-from nlpcda.tools.similarword import Similarword
+from nlpcda import Similarword
 
 test_str = '''这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击'''
 
@@ -102,7 +110,7 @@ for s in rs1:
 
 ```
 
-### 随机近义字替换
+### 3.随机近义字替换
 参数：
 - base_file ：缺省时使用内置【同义同音字表】，你可以设定/自己指定更加丰富的同义同音字表：
     > 是文本文件路径，内容形如（空格隔开）：\
@@ -114,7 +122,7 @@ for s in rs1:
 - change_rate=0.3 ： 文本改变率
 - seed ： 随机种子
 ```python
-from nlpcda.tools.homophone import Homophone
+from nlpcda import Homophone
 
 test_str = '''这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击'''
 
@@ -134,13 +142,13 @@ for s in rs1:
 
 ```
 
-### 随机字删除
+### 4.随机字删除
 参数：
 - create_num=3 ：返回最多3个增强文本
 - change_rate=0.3 ： 文本改变率
 - seed ： 随机种子
 ```python
-from nlpcda.tools.randomdeletechar import RandomDeleteChar
+from nlpcda  import RandomDeleteChar
 
 test_str = '''这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击'''
 
@@ -160,7 +168,7 @@ for s in rs1:
 
 ```
 
-### NER命名实体 数据增强
+### 5.NER命名实体 数据增强
 输入标注好的NER数据目录，和需要增强的标注文件路径，和增强的数量，即可一键增强
 
 Ner类参数：
@@ -192,7 +200,7 @@ Ner类参数：
 
 例子：
 ```python
-from nlpcda.tools.ner import Ner
+from nlpcda import Ner
 
 ner = Ner(ner_dir_name='ner_data',
         ignore_tag_list=['O'],
@@ -204,13 +212,38 @@ data_sentence_arrs, data_label_arrs = ner.augment(file_name='0.txt')
 print(data_sentence_arrs, data_label_arrs)
 ```
 
+### 6.随机置换邻近的字
+- char_gram=3：某个字至于邻近的3个字交换
+- 内部细节：遇到数字，符号等非中文，不会交换
+```python
+from nlpcda import CharPositionExchange
+
+ts = '''这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击'''
+smw = CharPositionExchange(create_num=3, change_rate=0.3,char_gram=3,seed=1)
+rs=smw.replace(ts)
+for s in rs:
+    print(s)
+
+'''
+这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击
+这实个是体：58城同；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，差不；这个nlpcad包，便用一数方增键强据于，增有效可强NLP模型性泛化的能、动少减波、抵对攻抗抗击
+这是个体实：58城同；今是天2020年3月8日11:40，朗气晴天，天气很错不，空好很气，不差；个这nlpcad包，方便键一据增用数于强，可有效强增NLP模型的性化泛能、动减波少、抗抗击抵对攻
+'''
+
+
+
+
+```
+
+
 ### 添加自定义词典
 用于使用之前，增加分词效果
 ```python
-from nlpcda.tools.randomword import Randomword
-from nlpcda.tools.similarword import Similarword
-from nlpcda.tools.homophone import Homophone
-from nlpcda.tools.randomdeletechar import RandomDeleteChar
+from nlpcda import Randomword
+from nlpcda import Similarword
+from nlpcda import Homophone
+from nlpcda import RandomDeleteChar
+from nlpcda import Ner
 
 Randomword.add_word('小明')
 Randomword.add_words(['小明','小白','天地良心'])

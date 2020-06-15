@@ -24,7 +24,7 @@ class Homophone(Basetool):
         print('load :%s done' % (self.base_file))
         return combine_dict
 
-    def replace(self, replace_str):
+    def replace(self, replace_str:str):
         replace_str = replace_str.replace('\n', '').strip()
         words = list(replace_str)
         sentences = [replace_str]

@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from nlpcda.tools.randomword import Randomword
-from nlpcda.tools.similarword import Similarword
-from nlpcda.tools.homophone import Homophone
-from nlpcda.tools.randomdeletechar import RandomDeleteChar
-from nlpcda.tools.ner import Ner
-from nlpcda.config import quick_start_path
+from nlpcda import Randomword
+from nlpcda import Similarword
+from nlpcda import Homophone
+from nlpcda import RandomDeleteChar
+from nlpcda import Ner
+from nlpcda import CharPositionExchange
 
 
 def test_Randomword(test_str, create_num=3, change_rate=0.1):
@@ -51,17 +51,17 @@ def test_RandomDeleteChar(test_str, create_num=3, change_rate=0.1):
 
 
 def test_ner():
-    ner = Ner(ner_dir_name='write',
+    ner = Ner(ner_dir_name='../write',
               ignore_tag_list=['O', 'T'],
               data_augument_tag_list=['Cause', 'Effect'],
               augument_size=3, seed=0)
-    data_sentence_arrs, data_label_arrs = ner.augment('write/0.txt')
+    data_sentence_arrs, data_label_arrs = ner.augment('../write/1.txt')
     print(data_sentence_arrs, data_label_arrs)
 
 
-def quick_start():
-    with open(quick_start_path, 'r', encoding='utf-8') as f:
-        print(f.read())
+def test_CharPositionExchange(test_str, create_num=10, change_rate=0.5):
+    smw = CharPositionExchange(create_num=create_num, change_rate=change_rate)
+    return smw.replace(test_str)
 
 
 def test():
@@ -85,6 +85,8 @@ def test():
         print(s)
 
 
-# if __name__ == '__main__':
-    # quick_start()
-    # test_ner()
+if __name__ == '__main__':
+    ts = '''这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击'''
+    rs = test_CharPositionExchange(test_str=ts)
+    for s in rs:
+        print(s)

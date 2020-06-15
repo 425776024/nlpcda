@@ -27,7 +27,7 @@ class Similarword(Basetool):
         print('load :%s done' % (self.base_file))
         return combine_dict
 
-    def replace(self, replace_str):
+    def replace(self, replace_str:str):
         replace_str = replace_str.replace('\n', '').strip()
         seg_list = self.jieba.cut(replace_str, cut_all=False)
         words = list(seg_list)
@@ -45,7 +45,7 @@ class Similarword(Basetool):
                 break
         return sentences
 
-    def s1(self, word):
+    def s1(self, word:str):
         # 替换所有在combine_dict中的
         if len(word) == 1: return word
         if word in self.base_file_mapobj and self.random.random() < self.change_rate:
