@@ -226,7 +226,10 @@ for s in rs:
 ```
 
 ### 7.百度中英翻译互转实现的增强
+note:
 
+> 申请你的 appid、secretKey: http://api.fanyi.baidu.com/api/trans
+>
 ```python
 from nlpcda import baidu_translate
 
