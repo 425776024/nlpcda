@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from nlpcda.tools.Basetool import Basetool
-from nlpcda.config import similarword_path, company_path
+from nlpcda.config import similarword_path
 
 
 class Similarword(Basetool):

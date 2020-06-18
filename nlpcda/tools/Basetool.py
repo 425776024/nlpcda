@@ -19,7 +19,7 @@ class Basetool:
         self.loop_t = 2
         self.base_file_mapobj = self.load_paser_base_file()
 
-    def set_userdict(self, txt_path:str):
+    def set_userdict(self, txt_path: str):
         '''
         设置你自己的用户字典
         :param txt_path:

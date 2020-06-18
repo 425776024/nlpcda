@@ -7,6 +7,7 @@ from nlpcda import Homophone
 from nlpcda import RandomDeleteChar
 from nlpcda import Ner
 from nlpcda import CharPositionExchange
+from nlpcda import baidu_translate
 
 
 def test_Randomword(test_str, create_num=3, change_rate=0.1):
@@ -62,6 +63,12 @@ def test_ner():
 def test_CharPositionExchange(test_str, create_num=10, change_rate=0.5):
     smw = CharPositionExchange(create_num=create_num, change_rate=change_rate)
     return smw.replace(test_str)
+
+
+def test_baidu_translate():
+    a = 'Free translation for each platform'
+    s = baidu_translate(a, appid='xxx', secretKey='xxx')
+    print(s)
 
 
 def test():

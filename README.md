@@ -17,12 +17,12 @@ pypi:https://pypi.org/project/nlpcda/
 - 4.随机字删除（内部细节：数字时间日期片段，内容不会删）
 - 5.`新增`：NER类 `BIO` 数据增强
 - 6.`新增` 随机置换邻近的字：**研表究明，汉字序顺并不定一影响文字的阅读理解**<<是乱序的
+- 7.百度中英翻译互转实现的增强
 
 `经过细节特殊处理，尽量保证不改变原文语义。即使改变也能被猜出来、能被猜出来、能被踩出来、能被菜粗来、被菜粗、能菜粗来`
 
 ## 计划中的未来内容
 - 基于LaserTagger的文本复述，输入A，用句子B去复述它，B尽量和A语义一致
-- 翻译互转实现的增强
 - 基于Word2Vec、BERT等词向量的词语近距离的替换、MASK猜测置换
 - 引入TF-IDF、TextRank等，可以选择：替换/不替换关键词
 
@@ -224,6 +224,19 @@ for s in rs:
 '''
 
 ```
+
+### 7.百度中英翻译互转实现的增强
+
+```python
+from nlpcda import baidu_translate
+
+a = 'Free translation for each platform'
+# 申请你的 appid、secretKey
+s = baidu_translate(content=a, appid='xxx', secretKey='xxx')
+print(s)
+
+```
+
 
 ### 添加自定义词典
 用于使用之前，增加分词效果
