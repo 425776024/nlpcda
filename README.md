@@ -22,9 +22,10 @@ pypi:https://pypi.org/project/nlpcda/
 `经过细节特殊处理，尽量保证不改变原文语义。即使改变也能被猜出来、能被猜出来、能被踩出来、能被菜粗来、被菜粗、能菜粗来`
 
 ## 计划中的未来内容
-- 基于LaserTagger的文本复述，输入A，用句子B去复述它，B尽量和A语义一致
-- 基于Word2Vec、BERT等词向量的词语近距离的替换、MASK猜测置换
-- 引入TF-IDF、TextRank等，可以选择：替换/不替换关键词
+- 基于LaserTagger的文本复述，输入A，用句子B去复述它，B尽量和A语义一致。[实现了lasertagger-chinese](https://github.com/425776024/lasertagger-chinese)
+- 基于Word2Vec、BERT等词向量的词语近距离的替换、MASK猜测置换 ？？
+- 引入TF-IDF、TextRank、关键词字典等，可以选择：替换/不替换关键词 ？？
+- 还有什么？？
 
 ## 意义
 - 在不改变原文语义的情况下，生成指定数量的训练语料文本
