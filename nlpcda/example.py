@@ -8,6 +8,7 @@ from nlpcda import RandomDeleteChar
 from nlpcda import Ner
 from nlpcda import CharPositionExchange
 from nlpcda import baidu_translate
+from nlpcda import EquivalentChar
 
 
 def test_Randomword(test_str, create_num=3, change_rate=0.1):
@@ -71,12 +72,18 @@ def test_baidu_translate():
     print(s)
 
 
+def test_EquivalentChar(test_str, create_num=10, change_rate=0.5):
+    s = EquivalentChar(create_num=create_num, change_rate=change_rate)
+    return s.replace(test_str)
+
+
 def test():
     ts = '''这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击'''
     rs1 = test_Randomword(ts)
     rs2 = test_Similarword(ts)
     rs3 = test_Homophone(ts)
     rs4 = test_RandomDeleteChar(ts)
+    rs5 = test_EquivalentChar(ts)
     print('随机实体替换>>>>>>')
     for s in rs1:
         print(s)
@@ -90,10 +97,15 @@ def test():
     print('随机字删除>>>>>>')
     for s in rs4:
         print(s)
+    print('等价字替换>>>>>>')
+    for s in rs5:
+        print(s)
 
 
 if __name__ == '__main__':
-    ts = '''这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击'''
-    rs = test_CharPositionExchange(test_str=ts)
-    for s in rs:
+    ts = '''今天是2020年3月8日11:40，天气晴朗，天气很不错。'''
+    rs = EquivalentChar(create_num=3, change_rate=0.5)
+    res = rs.replace(ts)
+    print('等价字替换>>>>>>')
+    for s in res:
         print(s)
