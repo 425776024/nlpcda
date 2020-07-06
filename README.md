@@ -249,7 +249,7 @@ print(s)
 
 ### 8.等价字替换
 参数：
-- base_file ：缺省时使用内置【等价数字字表】，你可以设定/自己指定更加丰富的等价字表：
+- base_file ：缺省时使用内置【等价数字字表】，你可以设定/自己指定更加丰富的等价字表(或者使用函数：add_equivalent_list)：
     > 是文本文件路径，内容形如（(\t)隔开）：\
     > 0	零	〇\
     > 1	一	壹	①\
@@ -264,6 +264,8 @@ from nlpcda import EquivalentChar
 test_str = '''今天是2020年3月8日11:40，天气晴朗，天气很不错。'''
 
 s = EquivalentChar(create_num=3, change_rate=0.3)
+# 添加等价字
+s.add_equivalent_list(['看', '瞅'])
 res=s.replace(test_str)
 print('等价字替换>>>>>>')
 for s in res:
