@@ -12,8 +12,10 @@ nlpcda.egg-info/top_level.txt
 nlpcda/data/company.txt
 nlpcda/data/同义词.txt
 nlpcda/data/同音意字.txt
+nlpcda/data/等价字.txt
 nlpcda/tools/Basetool.py
 nlpcda/tools/Char_position_exchange.py
+nlpcda/tools/Equivalent_char.py
 nlpcda/tools/Homophone.py
 nlpcda/tools/Ner.py
 nlpcda/tools/Random_delete_char.py

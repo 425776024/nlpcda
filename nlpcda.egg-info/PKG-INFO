@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: nlpcda
-Version: 2.3.1
+Version: 2.4.0
 Summary: NLP Chinese Data Augmentation.一键中文数据增强.NLP数据增强
 Home-page: https://github.com/425776024/nlpcda
 Author: Jiang.XinFa
@@ -25,14 +25,21 @@ Description: # NLP Chinese Data Augmentation 一键中文数据增强工具
         - 4.随机字删除（内部细节：数字时间日期片段，内容不会删）
         - 5.`新增`：NER类 `BIO` 数据增强
         - 6.`新增` 随机置换邻近的字：**研表究明，汉字序顺并不定一影响文字的阅读理解**<<是乱序的
-        - 7.百度中英翻译互转实现的增强
+        - 7.`新增`百度中英翻译互转实现的增强
+        - 8.`新增`中文等价字替换（1	一	壹	①，2	二	贰	②）
         
         `经过细节特殊处理，尽量保证不改变原文语义。即使改变也能被猜出来、能被猜出来、能被踩出来、能被菜粗来、被菜粗、能菜粗来`
         
         ## 计划中的未来内容
-        - 基于LaserTagger的文本复述，输入A，用句子B去复述它，B尽量和A语义一致
-        - 基于Word2Vec、BERT等词向量的词语近距离的替换、MASK猜测置换
-        - 引入TF-IDF、TextRank等，可以选择：替换/不替换关键词
+        - [使用 WordNet数据库 来做同义词替换](http://openkg.cn/dataset/chinese-wordnet)
+        - 随机噪声注入？随机插入一些字符，太简单实现了。
+        - 遗传算法中的交叉突变思想？随机突然改变极小部分字，多个同类型文本中的短句片段（，。！：……分割），相互交换。
+        - 利用pingyin？[https://github.com/mozillazg/python-pinyin](https://github.com/mozillazg/python-pinyin) 
+        - 基于HMM/CRF的数据增强？
+        - 基于LaserTagger的文本复述，输入A，用句子B去复述它，B尽量和A语义一致。[实现了lasertagger-chinese](https://github.com/425776024/lasertagger-chinese)
+        - 基于Word2Vec、BERT等词向量的词语近距离的替换、MASK猜测置换 ？？但是无法控制它生成，以及缺点MASK位置。
+        - 引入TF-IDF、TextRank、关键词字典等，可以选择：替换/不替换关键词 ？？
+        - 还有什么？？
         
         ## 意义
         - 在不改变原文语义的情况下，生成指定数量的训练语料文本
@@ -114,7 +121,7 @@ Description: # NLP Chinese Data Augmentation 一键中文数据增强工具
         ### 3.随机近义字替换
         参数：
         - base_file ：缺省时使用内置【同义同音字表】，你可以设定/自己指定更加丰富的同义同音字表：
-            > 是文本文件路径，内容形如（空格隔开）：\
+            > 是文本文件路径，内容形如（\t隔开）：\
             > de	的	地	得	德	嘚	徳	锝	脦	悳	淂	鍀	惪	恴	棏\
             > 拼音2 字b1 字b2 ... 字bk\
             > ...\
@@ -234,7 +241,10 @@ Description: # NLP Chinese Data Augmentation 一键中文数据增强工具
         ```
         
         ### 7.百度中英翻译互转实现的增强
+        note:
         
+        > 申请你的 appid、secretKey: http://api.fanyi.baidu.com/api/trans
+        >
         ```python
         from nlpcda import baidu_translate
         
@@ -245,6 +255,36 @@ Description: # NLP Chinese Data Augmentation 一键中文数据增强工具
         
         ```
         
+        ### 8.等价字替换
+        参数：
+        - base_file ：缺省时使用内置【等价数字字表】，你可以设定/自己指定更加丰富的等价字表：
+            > 是文本文件路径，内容形如（(\t)隔开）：\
+            > 0	零	〇\
+            > 1	一	壹	①\
+            > ...\
+            > 9	九	玖	⑨
+        - create_num=3 ：返回最多3个增强文本
+        - change_rate=0.3 ： 文本改变率
+        - seed ： 随机种子
+        ```python
+        from nlpcda import EquivalentChar
+        
+        test_str = '''今天是2020年3月8日11:40，天气晴朗，天气很不错。'''
+        
+        s = EquivalentChar(create_num=3, change_rate=0.3)
+        res=s.replace(test_str)
+        print('等价字替换>>>>>>')
+        for s in res:
+            print(s)
+        
+        '''
+        等价字替换>>>>>>
+        今天是2020年3月8日11:40，天气晴朗，天气很不错。
+        今天是二〇2〇年3月八日1①:4〇，天气晴朗，天气很不错。
+        今天是二0贰零年3月捌日11:40，天气晴朗，天气很不错
+        '''
+        
+        ```
         
         ### 添加自定义词典
         用于使用之前，增加分词效果

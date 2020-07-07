@@ -240,10 +240,12 @@ note:
 ```python
 from nlpcda import baidu_translate
 
-a = 'Free translation for each platform'
+zh = '天气晴朗，天气很不错，空气很好'
 # 申请你的 appid、secretKey
-s = baidu_translate(content=a, appid='xxx', secretKey='xxx')
-print(s)
+# 两遍洗数据法（回来的中文一般和原来不一样，要是一样，就不要了，靠运气？）
+en_s = baidu_translate(content=zh, appid='xxx', secretKey='xxx',t_from='zh', t_to='en')
+zh_s = baidu_translate(content=en_s, appid='xxx', secretKey='xxx',t_from='en', t_to='zh')
+print(zh_s)
 
 ```
 

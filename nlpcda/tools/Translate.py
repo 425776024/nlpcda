@@ -3,16 +3,13 @@
 # @Author  : xinfa.jiang
 # @File    : Translate.
 
-import urllib.request
-import urllib.parse
-import json
 import requests
 import random
 import hashlib
 
 
 # 百度翻译方法
-def baidu_translate(content, appid, secretKey):
+def baidu_translate(content, appid, secretKey, t_from='en', t_to='zh'):
     # print(content)
     if len(content) > 4891:
         return '输入请不要超过4891个字符！'
@@ -25,8 +22,8 @@ def baidu_translate(content, appid, secretKey):
     sign = appid + content + salt + secretKey
     sign = hashlib.md5(sign.encode(encoding='UTF-8')).hexdigest()
     head = {'q': f'{content}',
-            'from': 'en',
-            'to': 'zh',
+            'from': t_from,
+            'to': t_to,
             'appid': f'{appid}',
             'salt': f'{salt}',
             'sign': f'{sign}'}
