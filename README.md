@@ -206,7 +206,7 @@ from nlpcda import Ner
 ner = Ner(ner_dir_name='ner_data',
         ignore_tag_list=['O'],
         data_augument_tag_list=['P', 'LOC','ORG'],
-        augument_size=3, seed=0),
+        augument_size=3, seed=0)
 data_sentence_arrs, data_label_arrs = ner.augment(file_name='0.txt')
 # 3条增强后的句子、标签 数据，len(data_sentence_arrs)==3
 # 你可以写文件输出函数，用于写出，作为后续训练等
