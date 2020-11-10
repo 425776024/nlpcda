@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: nlpcda
-Version: 2.5.1
+Version: 2.5.2
 Summary: NLP Chinese Data Augmentation.一键中文数据增强.NLP数据增强
 Home-page: https://github.com/425776024/nlpcda
 Author: Jiang.XinFa
@@ -19,15 +19,15 @@ Description: # NLP Chinese Data Augmentation 一键中文数据增强工具
         ## 介绍
         
         一键中文数据增强工具，支持：
-        - 1.随机实体替换
-        - 2.近义词
-        - 3.近义近音字替换
-        - 4.随机字删除（内部细节：数字时间日期片段，内容不会删）
-        - 5.NER类 `BIO` 数据增强
-        - 6.随机置换邻近的字：**研表究明，汉字序顺并不定一影响文字的阅读理解**<<是乱序的
-        - 7.百度中英翻译互转实现的增强
-        - 8.中文等价字替换（1	一	壹	①，2	二	贰	②）
-        - 9.使用`UniLM`做生成式相似句生成
+        - [1.随机实体替换](#1随机等价实体替换)
+        - [2.近义词](#2随机同义词替换)
+        - [3.近义近音字替换](#3随机近义字替换)
+        - [4.随机字删除（内部细节：数字时间日期片段，内容不会删）](#4随机字删除)
+        - [5.NER类 `BIO` 数据增强](#5ner命名实体-数据增强)
+        - [6.随机置换邻近的字：**研表究明，汉字序顺并不定一影响文字的阅读理解**<<是乱序的](#6随机置换邻近的字)
+        - [7.百度中英翻译互转实现的增强](#7百度中英翻译互转实现的增强)
+        - [8.中文等价字替换（1	一	壹	①，2	二	贰	②）](#8等价字替换)
+        - [9.使用`UniLM`做生成式相似句生成](#9simbert)
         
         `经过细节特殊处理，比如不改变年月日数字，尽量保证不改变原文语义。即使改变也能被猜出来、能被猜出来、能被踩出来、能被菜粗来、被菜粗、能菜粗来`
         
@@ -291,6 +291,8 @@ Description: # NLP Chinese Data Augmentation 一键中文数据增强工具
         ### 9.simbert
         [来源：https://github.com/ZhuiyiTechnology/pretrained-models](https://github.com/ZhuiyiTechnology/pretrained-models)
         
+        [参考：https://github.com/ZhuiyiTechnology/simbert](https://github.com/ZhuiyiTechnology/simbert)
+        
         下载其中任意模型，解压到任意位置赋值给`model_path`变量：
         
         | 名称           | 训练数据大小 | 词表大小 | 模型大小 | 下载地址 |
@@ -300,10 +302,10 @@ Description: # NLP Chinese Data Augmentation 一键中文数据增强工具
         | SimBERT Base  |  2200万相似句组 | 13685  | 344MB | [百度网盘](https://pan.baidu.com/s/1uGfQmX1Kxcv_cXTVsvxTsQ)(6xhq) |
         
         参数：
-        - config：model_path（上述下载的模型位置），设备（GPU/CPU）、最大长度、随机种子
+        - config：model_path（上述下载的模型位置），设备（cup/cuda:0...）、最大长度、随机种子
         - sent：需要增强的句子数量
-        - k：增强数据
-        - threhold：阈值
+        - k：增强句子数量
+        - threhold：阈值(增强的句子相似度低于此阈值不要)
         ```python
         from nlpcda import Simbert
         config = {

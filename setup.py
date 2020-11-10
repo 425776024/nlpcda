@@ -9,7 +9,7 @@ with open("README.md", "r", encoding='UTF-8') as fh:
 
 setup(
     name="nlpcda",
-    version="2.5.1",
+    version="2.5.2",
     keywords=("pip", "nlptool", "nlpcda", "nlp", '数据增强'),
     description="NLP Chinese Data Augmentation.一键中文数据增强.NLP数据增强",
     long_description=long_description,
