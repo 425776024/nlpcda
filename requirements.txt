@@ -1,4 +1,4 @@
-numpy==1.18.5
 requests==2.24.0
-bert4keras==0.9.1
+numpy==1.18.5
+bert4keras==0.7.7
 jieba==0.42.1

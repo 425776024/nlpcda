@@ -20,8 +20,11 @@ nlpcda/tools/Homophone.py
 nlpcda/tools/Ner.py
 nlpcda/tools/Random_delete_char.py
 nlpcda/tools/Random_word.py
+nlpcda/tools/Simbert.py
 nlpcda/tools/Similar_word.py
 nlpcda/tools/Translate.py
 nlpcda/tools/__init__.py
 nlpcda/tools/homophone.py
 nlpcda/tools/ner.py
+nlpcda/tools/simbert/__init__.py
+nlpcda/tools/simbert/generator.py

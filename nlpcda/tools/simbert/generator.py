@@ -10,14 +10,9 @@ from bert4keras.snippets import sequence_padding, AutoRegressiveDecoder
 def setup_seed(seed):
     try:
         import random
-        import torch
         import numpy as np
-        import tensorflow
         np.random.seed(seed)
         random.seed(seed)
-        tensorflow.set_random_seed(seed)
-        torch.manual_seed(seed)  # cpu
-        torch.backends.cudnn.deterministic = True  # cpu/gpu结果一致
     except Exception as e:
         pass
 
