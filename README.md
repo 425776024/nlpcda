@@ -11,7 +11,7 @@ pypi:https://pypi.org/project/nlpcda/
 ## 介绍
 
 一键中文数据增强工具，支持：
-- 1.随机实体替换
+- [1.随机实体替换](#1随机等价实体替换)
 - 2.近义词
 - 3.近义近音字替换
 - 4.随机字删除（内部细节：数字时间日期片段，内容不会删）
@@ -296,8 +296,8 @@ for s in res:
 参数：
 - config：model_path（上述下载的模型位置），设备（cup/cuda:0...）、最大长度、随机种子
 - sent：需要增强的句子数量
-- k：增强数据
-- threhold：阈值
+- k：增强句子数量
+- threhold：阈值(增强的句子相似度低于此阈值不要)
 ```python
 from nlpcda import Simbert
 config = {
