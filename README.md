@@ -19,11 +19,11 @@ pypi:https://pypi.org/project/nlpcda/
 - 6.随机置换邻近的字：**研表究明，汉字序顺并不定一影响文字的阅读理解**<<是乱序的
 - 7.百度中英翻译互转实现的增强
 - 8.中文等价字替换（1	一	壹	①，2	二	贰	②）
+- 9.使用`UniLM`做生成式相似句生成
 
 `经过细节特殊处理，比如不改变年月日数字，尽量保证不改变原文语义。即使改变也能被猜出来、能被猜出来、能被踩出来、能被菜粗来、被菜粗、能菜粗来`
 
 ## 计划中的未来内容
-- 使用`UniLM`做生成式相似句生成
 - 增加多线程操作，一键操作
 - [使用 WordNet数据库 来做同义词替换](http://openkg.cn/dataset/chinese-wordnet)
 - 随机噪声注入？随机插入一些字符，太简单实现了。
@@ -279,6 +279,46 @@ for s in res:
 '''
 
 ```
+
+### 9.simbert
+[来源：https://github.com/ZhuiyiTechnology/pretrained-models](https://github.com/ZhuiyiTechnology/pretrained-models)
+
+下载其中任意模型，解压到任意位置赋值给`model_path`变量：
+
+| 名称           | 训练数据大小 | 词表大小 | 模型大小 | 下载地址 |
+| :----------:  |:---------:| :------: | :------: | :------: |
+| SimBERT Tiny  | 2200万相似句组  | 13685   | 26MB   | [百度网盘](https://pan.baidu.com/s/1z_agqTuBTuyHANwrS-gPcg)(1tp7) |
+| SimBERT Small |  2200万相似句组 | 13685  | 49MB  | [百度网盘](https://pan.baidu.com/s/1kq_EQDI0gpiZBLFd_AxwrA)(nu67) |
+| SimBERT Base  |  2200万相似句组 | 13685  | 344MB | [百度网盘](https://pan.baidu.com/s/1uGfQmX1Kxcv_cXTVsvxTsQ)(6xhq) |
+
+参数：
+- config：model_path（上述下载的模型位置），设备（GPU/CPU）、最大长度、随机种子
+- sent：需要增强的句子数量
+- k：增强数据
+- threhold：阈值
+```python
+from nlpcda import Simbert
+config = {
+        'model_path': '/xxxx/chinese_simbert_L-12_H-768_A-12',
+        'device': 'cpu',
+        'max_len': 32,
+        'seed': 1
+}
+simbert = Simbert(config=config)
+sent = '把我的一个亿存银行安全吗'
+synonyms = simbert.replace(sent=sent, k=5, threhold=0.85)
+print(synonyms)
+'''
+[('我的一个亿，存银行，安全吗', 0.9871675372123718), 
+('把一个亿存到银行里安全吗', 0.9352194666862488), 
+('一个亿存银行安全吗', 0.9330801367759705), 
+('一个亿的存款存银行安全吗', 0.92387855052948),
+ ('我的一千万存到银行安不安全', 0.9014463424682617)]
+'''
+
+
+```
+
 
 ### 添加自定义词典
 用于使用之前，增加分词效果
