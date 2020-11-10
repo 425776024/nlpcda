@@ -292,7 +292,7 @@ for s in res:
 | SimBERT Base  |  2200万相似句组 | 13685  | 344MB | [百度网盘](https://pan.baidu.com/s/1uGfQmX1Kxcv_cXTVsvxTsQ)(6xhq) |
 
 参数：
-- config：model_path（上述下载的模型位置），设备（GPU/CPU）、最大长度、随机种子
+- config：model_path（上述下载的模型位置），设备（cup/cuda:0...）、最大长度、随机种子
 - sent：需要增强的句子数量
 - k：增强数据
 - threhold：阈值
