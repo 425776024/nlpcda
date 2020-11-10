@@ -282,6 +282,7 @@ for s in res:
 
 ### 9.simbert
 [来源：https://github.com/ZhuiyiTechnology/pretrained-models](https://github.com/ZhuiyiTechnology/pretrained-models)
+
 [参考：https://github.com/ZhuiyiTechnology/simbert](https://github.com/ZhuiyiTechnology/simbert)
 
 下载其中任意模型，解压到任意位置赋值给`model_path`变量：
