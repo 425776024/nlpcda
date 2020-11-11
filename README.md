@@ -294,10 +294,9 @@ for s in res:
 | SimBERT Base  |  2200万相似句组 | 13685  | 344MB | [百度网盘](https://pan.baidu.com/s/1uGfQmX1Kxcv_cXTVsvxTsQ)(6xhq) |
 
 参数：
-- config：model_path（上述下载的模型位置），设备（cup/cuda:0...）、最大长度、随机种子
-- sent：需要增强的句子数量
-- k：增强句子数量
-- threhold：阈值(增强的句子相似度低于此阈值不要)
+- config：model_path（上述下载的模型位置），设备（cpu/cuda...）、最大长度、随机种子
+- sent：需要增强的句子
+- create_num：构造的句子数量
 ```python
 from nlpcda import Simbert
 config = {
