@@ -77,4 +77,5 @@ class SynonymsGenerator(AutoRegressiveDecoder):
         argsort = scores.argsort()
         scores = scores.tolist()
         # print(scores.shape)
-        return [(r[i + 1], scores[i]) for i in argsort[::-1][:k] if scores[i] > threhold]
+        # return [(r[i + 1], scores[i]) for i in argsort[::-1][:k] if scores[i] > threhold]
+        return [(r[i + 1], scores[i]) for i in argsort[::-1][:k]]

@@ -302,13 +302,13 @@ for s in res:
 from nlpcda import Simbert
 config = {
         'model_path': '/xxxx/chinese_simbert_L-12_H-768_A-12',
-        'device': 'cpu',
+        'device': 'cuda',
         'max_len': 32,
         'seed': 1
 }
 simbert = Simbert(config=config)
 sent = '把我的一个亿存银行安全吗'
-synonyms = simbert.replace(sent=sent, k=5, threhold=0.85)
+synonyms = simbert.replace(sent=sent, create_num=5)
 print(synonyms)
 '''
 [('我的一个亿，存银行，安全吗', 0.9871675372123718), 
