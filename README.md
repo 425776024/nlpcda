@@ -17,7 +17,7 @@ pypi:https://pypi.org/project/nlpcda/
 - [4.随机字删除（内部细节：数字时间日期片段，内容不会删）](#4随机字删除)
 - [5.NER类 `BIO` 数据增强](#5ner命名实体-数据增强)
 - [6.随机置换邻近的字：**研表究明，汉字序顺并不定一影响文字的阅读理解**<<是乱序的](#6随机置换邻近的字)
-- [7.百度中英翻译互转实现的增强](#7百度中英翻译互转实现的增强)
+- [7.翻译互转实现的增强](#7翻译互转实现的增强)
 - [8.中文等价字替换（1	一	壹	①，2	二	贰	②）](#8等价字替换)
 - [9.使用`UniLM`做生成式相似句生成](#9simbert)
 
@@ -230,7 +230,8 @@ for s in rs:
 
 ```
 
-### 7.百度中英翻译互转实现的增强
+### 7.翻译互转实现的增强
+1.百度中英翻译互转实现的增强
 note:
 
 > 申请你的 appid、secretKey: http://api.fanyi.baidu.com/api/trans
@@ -244,6 +245,24 @@ zh = '天气晴朗，天气很不错，空气很好'
 en_s = baidu_translate(content=zh, appid='xxx', secretKey='xxx',t_from='zh', t_to='en')
 zh_s = baidu_translate(content=en_s, appid='xxx', secretKey='xxx',t_from='en', t_to='zh')
 print(zh_s)
+
+```
+
+2.谷歌翻译互转实现的增强
+
+pip 包：[py-googletrans](https://py-googletrans.readthedocs.io/en/latest/)
+
+免费的谷歌翻译API，需要翻墙且不稳定
+
+[https://py-googletrans.readthedocs.io/en/latest](https://py-googletrans.readthedocs.io/en/latest)
+
+pip install googletrans
+```python
+from googletrans import Translator
+def googletrans(content='一个免费的谷歌翻译API', t_from='zh-cn', t_to='en'):
+    translator = Translator()
+    s = translator.translate(text=content, dest=t_to,src=t_from)
+    return s.text
 
 ```
 
