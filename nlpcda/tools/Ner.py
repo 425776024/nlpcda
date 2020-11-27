@@ -66,7 +66,7 @@ class Ner:
                 if pre_tag == '':
                     pre_tag = tp_tag
                     ner_sentence += t_char
-                elif pre_tag == tp_tag:
+                elif pre_tag == tp_tag and t_label[0] != 'B':
                     ner_sentence += t_char
                 else:
                     yield [pre_tag, ner_sentence]
