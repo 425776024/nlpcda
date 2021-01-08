@@ -20,6 +20,7 @@ pypi:https://pypi.org/project/nlpcda/
 - [7.翻译互转实现的增强](#7翻译互转实现的增强)
 - [8.中文等价字替换（1	一	壹	①，2	二	贰	②）](#8等价字替换)
 - [9.使用`UniLM`做生成式相似句生成](#9simbert)
+- [10.Cluster2Cluster生成更多样化的新数据](#10Cluster2Cluster)
 
 `经过细节特殊处理，比如不改变年月日数字，尽量保证不改变原文语义。即使改变也能被猜出来、能被猜出来、能被踩出来、能被菜粗来、被菜粗、能菜粗来`
 
@@ -340,6 +341,12 @@ print(synonyms)
 
 
 ```
+
+### 10.Cluster2Cluster
+- 参考：[数据增强没效果？试试用Cluster-to-Cluster生成更多样化的新数据吧](https://mp.weixin.qq.com/s/JP9xyclDfV1wHJkgGPKQ8A)
+
+WIP
+
 
 
 ### 添加自定义词典
