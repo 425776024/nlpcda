@@ -17,8 +17,8 @@ pypi:https://pypi.org/project/nlpcda/
 - [4.随机字删除（内部细节：数字时间日期片段，内容不会删）](#4随机字删除)
 - [5.NER类 `BIO` 数据增强](#5ner命名实体-数据增强)
 - [6.随机置换邻近的字：**研表究明，汉字序顺并不定一影响文字的阅读理解**<<是乱序的](#6随机置换邻近的字)
-- [7.翻译互转实现的增强](#7翻译互转实现的增强)
-- [8.中文等价字替换（1	一	壹	①，2	二	贰	②）](#8等价字替换)
+- [7.中文等价字替换（1	一	壹	①，2	二	贰	②）](#8等价字替换)
+- [8.翻译互转实现的增强](#7翻译互转实现的增强)
 - [9.使用`UniLM`做生成式相似句生成](#9simbert)
 - [10.Cluster2Cluster生成更多样化的新数据](#10Cluster2Cluster)
 
@@ -233,7 +233,57 @@ for s in rs:
 
 ```
 
-### 7.翻译互转实现的增强
+### 7.等价字替换
+参数：
+- base_file ：缺省时使用内置【等价数字字表】，你可以设定/自己指定更加丰富的等价字表(或者使用函数：add_equivalent_list)：
+    > 是文本文件路径，内容形如（(\t)隔开）：\
+    > 0	零	〇\
+    > 1	一	壹	①\
+    > ...\
+    > 9	九	玖	⑨
+- create_num=3 ：返回最多3个增强文本
+- change_rate=0.3 ： 文本改变率
+- seed ： 随机种子
+```python
+from nlpcda import EquivalentChar
+
+test_str = '''今天是2020年3月8日11:40，天气晴朗，天气很不错。'''
+
+s = EquivalentChar(create_num=3, change_rate=0.3)
+# 添加等价字
+s.add_equivalent_list(['看', '瞅'])
+res=s.replace(test_str)
+print('等价字替换>>>>>>')
+for s in res:
+    print(s)
+
+'''
+等价字替换>>>>>>
+今天是2020年3月8日11:40，天气晴朗，天气很不错。
+今天是二〇2〇年3月八日1①:4〇，天气晴朗，天气很不错。
+今天是二0贰零年3月捌日11:40，天气晴朗，天气很不错
+'''
+
+```
+
+### 添加自定义词典
+用于使用之前，增加分词效果
+```python
+from nlpcda import Randomword
+from nlpcda import Similarword
+from nlpcda import Homophone
+from nlpcda import RandomDeleteChar
+from nlpcda import Ner
+from nlpcda import CharPositionExchange
+
+Randomword.add_word('小明')
+Randomword.add_words(['小明','小白','天地良心'])
+# Similarword，Homophone，RandomDeleteChar 同上
+
+```
+
+
+### 8.翻译互转实现的增强
 1.百度中英翻译互转实现的增强
 note:
 
@@ -269,38 +319,7 @@ def googletrans(content='一个免费的谷歌翻译API', t_from='zh-cn', t_to='
 
 ```
 
-### 8.等价字替换
-参数：
-- base_file ：缺省时使用内置【等价数字字表】，你可以设定/自己指定更加丰富的等价字表(或者使用函数：add_equivalent_list)：
-    > 是文本文件路径，内容形如（(\t)隔开）：\
-    > 0	零	〇\
-    > 1	一	壹	①\
-    > ...\
-    > 9	九	玖	⑨
-- create_num=3 ：返回最多3个增强文本
-- change_rate=0.3 ： 文本改变率
-- seed ： 随机种子
-```python
-from nlpcda import EquivalentChar
 
-test_str = '''今天是2020年3月8日11:40，天气晴朗，天气很不错。'''
-
-s = EquivalentChar(create_num=3, change_rate=0.3)
-# 添加等价字
-s.add_equivalent_list(['看', '瞅'])
-res=s.replace(test_str)
-print('等价字替换>>>>>>')
-for s in res:
-    print(s)
-
-'''
-等价字替换>>>>>>
-今天是2020年3月8日11:40，天气晴朗，天气很不错。
-今天是二〇2〇年3月八日1①:4〇，天气晴朗，天气很不错。
-今天是二0贰零年3月捌日11:40，天气晴朗，天气很不错
-'''
-
-```
 
 ### 9.simbert
 [来源：https://github.com/ZhuiyiTechnology/pretrained-models](https://github.com/ZhuiyiTechnology/pretrained-models)
@@ -348,19 +367,3 @@ print(synonyms)
 WIP
 
 
-
-### 添加自定义词典
-用于使用之前，增加分词效果
-```python
-from nlpcda import Randomword
-from nlpcda import Similarword
-from nlpcda import Homophone
-from nlpcda import RandomDeleteChar
-from nlpcda import Ner
-from nlpcda import CharPositionExchange
-
-Randomword.add_word('小明')
-Randomword.add_words(['小明','小白','天地良心'])
-# Similarword，Homophone，RandomDeleteChar 同上
-
-```
