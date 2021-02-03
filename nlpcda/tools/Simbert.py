@@ -34,12 +34,12 @@ class Simbert:
 
 if __name__ == '__main__':
     config = {
-        'model_path': '/xxx/chinese_simbert_L-12_H-768_A-12',
+        'model_path': '/Users/jiang/Documents/pre_train_models/chinese_simbert_L-12_H-768_A-12',
         'device': 'cpu',
         'max_len': 32,
         'seed': 1
     }
     simbert = Simbert(config=config)
-    sent = '把我的一个亿存银行安全吗'
+    sent = '我天啊！太罕见了！山下智久木村拓哉龟梨和也同框'
     synonyms = simbert.replace(sent=sent, create_num=5)
     print(synonyms)
