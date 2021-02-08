@@ -214,7 +214,7 @@ print(data_sentence_arrs, data_label_arrs)
 ```
 
 ### 6.随机置换邻近的字
-- char_gram=3：某个字至于邻近的3个字交换
+- char_gram=3：某个字只和邻近的3个字交换
 - 内部细节：遇到数字，符号等非中文，不会交换
 ```python
 from nlpcda import CharPositionExchange
@@ -342,7 +342,7 @@ def googletrans(content='一个免费的谷歌翻译API', t_from='zh-cn', t_to='
 from nlpcda import Simbert
 config = {
         'model_path': '/xxxx/chinese_simbert_L-12_H-768_A-12',
-        'device': 'cuda',
+        'CUDA_VISIBLE_DEVICES': '0,1',
         'max_len': 32,
         'seed': 1
 }
