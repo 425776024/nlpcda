@@ -18,6 +18,9 @@ class Similarword(Basetool):
         combine_dict = {}
         for line in open(self.base_file, "r", encoding='utf-8'):
             seperate_word = line.strip().split(" ")
+            # 仅保留真正近义词，过滤相关词和独立词
+            if not seperate_word[0].endswith("="):
+                continue
             num = len(seperate_word)
             for i in range(1, num):
                 wi = seperate_word[i]
