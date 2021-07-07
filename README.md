@@ -361,9 +361,5 @@ print(synonyms)
 
 ```
 
-### 10.Cluster2Cluster
-- 参考：[数据增强没效果？试试用Cluster-to-Cluster生成更多样化的新数据吧](https://mp.weixin.qq.com/s/JP9xyclDfV1wHJkgGPKQ8A)
-
-WIP
 
 
