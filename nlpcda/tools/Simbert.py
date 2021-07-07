@@ -13,8 +13,6 @@ class Simbert:
     }
 
     def __init__(self, config: dict = {}):
-        if config.get('device') is None:
-            config['device'] = self._config['device']
         if config.get('max_len') is None:
             config['max_len'] = self._config['max_len']
         if config.get('seed') is None:
@@ -34,7 +32,6 @@ class Simbert:
 if __name__ == '__main__':
     config = {
         'model_path': '/Users/jiang/Documents/pre_train_models/chinese_simbert_L-12_H-768_A-12',
-        'device': '0',
         'max_len': 32,
         'seed': 1
     }
