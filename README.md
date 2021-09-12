@@ -23,13 +23,19 @@ pypi:https://pypi.org/project/nlpcda/
 
 `经过细节特殊处理，比如不改变年月日数字，尽量保证不改变原文语义。即使改变也能被猜出来、能被猜出来、能被踩出来、能被菜粗来、被菜粗、能菜粗来`
 
-## 计划中的未来内容
-- 增加多线程操作，一键操作
-- [使用 WordNet数据库 来做同义词替换](http://openkg.cn/dataset/chinese-wordnet)
-- 随机噪声注入？随机插入一些字符，太简单实现了。
-- 利用pingyin？[https://github.com/mozillazg/python-pinyin](https://github.com/mozillazg/python-pinyin) 
-- 基于Word2Vec、BERT等词向量的词语近距离的替换、MASK猜测置换 ？？但是无法控制它生成，以及缺点MASK位置。
-- 引入TF-IDF、TextRank、关键词字典等，可以选择：替换/不替换关键词 ？？
+## WIP
+- 基于语音的洗文本过程（类似翻译）。`文本`转`语音`>`语音`识别回`文本`：基于fastspeech2对文本生成语音，基于wav2vec2语音识别文本
+> 例子：
+> 
+> input: 新华社北京消息 > `fastspeech2` > x.wav
+> 
+> x.wav > `wav2vec2` > output: 新华设北京消息
+> 
+
+- 数字转换工具（用于文本转换、中文语音合成需要纯中文）
+> 今天是8月29日消息 > 今天是八月二十九日消息
+> 
+> 我有1234个苹果 > 我有一千二百三十四个苹果
 
 ## 意义
 - 在不改变原文语义的情况下，生成指定数量的训练语料文本
