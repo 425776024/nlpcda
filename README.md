@@ -343,6 +343,16 @@ def googletrans(content='一个免费的谷歌翻译API', t_from='zh-cn', t_to='
 - config：model_path（上述下载的模型位置），设备（cpu/cuda...）、最大长度、随机种子
 - sent：需要增强的句子
 - create_num：构造的句子数量
+
+环境参考（手动安装）：
+```
+
+keras==2.3.1
+bert4keras==0.7.7
+# tensorflow==1.13.1
+tensorflow-gpu==1.13.1
+
+```
 ```python
 from nlpcda import Simbert
 config = {
