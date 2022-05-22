@@ -43,7 +43,7 @@ class SynonymsGenerator(AutoRegressiveDecoder):
         super().__init__(start_id=None, end_id=self.tokenizer._token_end_id,
                          maxlen=self.max_len)
 
-    @AutoRegressiveDecoder.set_rtype('probas')
+    @AutoRegressiveDecoder.wraps('probas')
     def predict(self, inputs, output_ids, states):
         token_ids, segment_ids = inputs
         token_ids = np.concatenate([token_ids, output_ids], 1)
