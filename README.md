@@ -40,7 +40,7 @@ pypi:https://pypi.org/project/nlpcda/
 ## 意义
 - 在不改变原文语义的情况下，生成指定数量的训练语料文本
 - 对NLP模型的泛化性能、对抗攻击、干扰波动，有很好的提升作用
-- 参考比赛(本人用此策略+base bert拿到：50+-/1000)：https://www.biendata.com/competition/2019diac/
+- 参考比赛(本人用此策略+base bert拿到：50+-/1000)：https://www.biendata.net/competition/2019diac/
 - 基于nlpcda，本人[CCKS 2020：基于标题的大规模商品实体检索](https://www.biendata.net/competition/ccks_2020_6/final-leaderboard/)获得第9名，名字叫`nlpcda`
 
 > ⚠️ 单纯刷准确率分数的比赛，用此包一般不会有分数提升
