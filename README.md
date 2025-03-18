@@ -377,5 +377,9 @@ print(synonyms)
 
 ```
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=425776024/nlpcda&type=Date)](https://www.star-history.com/#425776024/nlpcda&Date)
+
 
 
