@@ -16,42 +16,28 @@ class Similarword(Basetool):
 
     def load_paser_base_file(self):
         combine_dict = {}
-        for line in open(self.base_file, "r", encoding='utf-8'):
-            seperate_word = line.strip().split(" ")
-            # 仅保留真正近义词，过滤相关词和独立词
-            if not seperate_word[0].endswith("="):
-                continue
-            num = len(seperate_word)
-            for i in range(1, num):
-                wi = seperate_word[i]
-                # add to user dict
-                if len(wi) > 1: self.add_word(wi)
-                combine_dict[wi] = seperate_word[1:]
-        print('load :%s done' % (self.base_file))
+        with open(self.base_file, "r", encoding='utf-8') as source:
+            for line in source:
+                seperate_word = line.split()
+                # Cilin marks related/independent words with #/@. Custom IDs are allowed.
+                if not seperate_word or seperate_word[0].endswith(('#', '@')):
+                    continue
+                for wi in seperate_word[1:]:
+                    if len(wi) > 1:
+                        self.add_word(wi)
+                    combine_dict[wi] = [word for word in seperate_word[1:] if word != wi]
         return combine_dict
 
     def replace(self, replace_str:str):
-        replace_str = replace_str.replace('\n', '').strip()
+        replace_str = self._validate_text(replace_str)
         seg_list = self.jieba.cut(replace_str, cut_all=False)
         words = list(seg_list)
-        sentences = [replace_str]
-        t = 0
-        while len(sentences) < self.create_num:
-            t += 1
-            a_sentence = ''
-            for word in words:
-                a_sentence += self.s1(word)
-
-            if a_sentence not in sentences:
-                sentences.append(a_sentence)
-            if t > self.create_num * self.loop_t / self.change_rate:
-                break
-        return sentences
+        return self._generate_sentences(replace_str, lambda: ''.join(self.s1(word) for word in words))
 
     def s1(self, word:str):
         # 替换所有在combine_dict中的
         if len(word) == 1: return word
-        if word in self.base_file_mapobj and self.random.random() < self.change_rate:
+        if self.base_file_mapobj.get(word) and self.random.random() < self.change_rate:
             wi = self.random.randint(0, len(self.base_file_mapobj[word]) - 1)
             place = self.base_file_mapobj[word][wi]
             return place

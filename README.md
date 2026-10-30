@@ -2,6 +2,19 @@
 
 使用：`pip install nlpcda`
 
+Python >=3.8。已有安装可运行 `python -m pip install --upgrade nlpcda`。
+
+### 2.5.9 基础维护更新
+
+修复随机删除末尾内容丢失、零增强率除零、全局随机状态和分词词典相互影响、
+NER 空行解析及单实体词池报错等问题。基础功能不需要 TensorFlow、Keras 或 NumPy；
+SimBERT 仅在实例化时加载独立安装的模型依赖。完整说明见 [CHANGELOG.md](CHANGELOG.md)。
+
+规则增强的 `create_num` 表示返回结果的**最多总数，包含原文**，结果去重。
+`change_rate` 范围为 `[0, 1]`，设为 `0` 时只返回原文；原文保留换行与首尾空白。
+每个实例有独立的随机状态和用户词典。同样的输入、配置和调用顺序可复现结果，
+但结果不保证与旧版逐字相同。
+
 开源不易，欢迎 star🌟
 
 pypi:https://pypi.org/project/nlpcda/
@@ -219,6 +232,10 @@ data_sentence_arrs, data_label_arrs = ner.augment(file_name='0.txt')
 print(data_sentence_arrs, data_label_arrs)
 ```
 
+支持用空行分隔多个 BIO 句子；每句最多生成 `augument_size` 条不同于原句的结果，
+输出保持句子独立。替换实体长度变化时会重新生成 BIO 标签；没有可替换实体时返回空结果。
+实体词池应仅从训练集目录构建，避免引入验证集或测试集的信息。
+
 ### 6.随机置换邻近的字
 - char_gram=3：某个字只和邻近的3个字交换
 - 内部细节：遇到数字，符号等非中文，不会交换
@@ -282,8 +299,9 @@ from nlpcda import RandomDeleteChar
 from nlpcda import Ner
 from nlpcda import CharPositionExchange
 
-Randomword.add_word('小明')
-Randomword.add_words(['小明','小白','天地良心'])
+augmenter = Randomword()
+augmenter.add_word('小明')
+augmenter.add_words(['小明','小白','天地良心'])
 # Similarword，Homophone，RandomDeleteChar 同上
 
 ```
@@ -346,6 +364,10 @@ def googletrans(content='一个免费的谷歌翻译API', t_from='zh-cn', t_to='
 - create_num：构造的句子数量
 
 环境参考（手动安装）：
+
+以下为历史环境记录，不表示已通过当前 Python/TensorFlow 版本的模型推理验证。
+规则增强无需安装这些模型依赖。`CUDA_VISIBLE_DEVICES` 可省略，省略时保留现有设备配置；
+`model_path` 必须指向已下载的本地模型目录。
 ```
 
 keras==2.3.1
@@ -376,6 +398,19 @@ print(synonyms)
 
 
 ```
+
+## 开发与发布验证
+
+```bash
+python -m pip install . build twine
+python -m unittest discover -s tests -v
+python -m build
+python -m twine check dist/*
+```
+
+CI 在 Linux 的 Python 3.8–3.14，以及 Windows/macOS 的 Python 3.12 上检查
+安装后的包。SimBERT 模型推理与百度翻译在线请求需要另行准备模型或服务凭据，
+不属于离线回归测试的覆盖范围。
 
 ## Star History
 

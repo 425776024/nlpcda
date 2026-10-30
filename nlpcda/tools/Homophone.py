@@ -16,34 +16,29 @@ class Homophone(Basetool):
 
     def load_paser_base_file(self):
         combine_dict = {}
-        for line in open(self.base_file, "r", encoding='utf-8'):
-            seperate_word = line.strip().split("\t")
-            num = len(seperate_word)
-            for i in range(1, num):
-                combine_dict[seperate_word[i]] = seperate_word[1:]
-        print('load :%s done' % (self.base_file))
+        with open(self.base_file, "r", encoding='utf-8') as source:
+            for line in source:
+                seperate_word = line.split()
+                for word in seperate_word[1:]:
+                    combine_dict[word] = [other for other in seperate_word[1:] if other != word]
         return combine_dict
 
     def replace(self, replace_str:str):
-        replace_str = replace_str.replace('\n', '').strip()
+        replace_str = self._validate_text(replace_str)
         words = list(replace_str)
-        sentences = [replace_str]
-        t = 0
-        while len(sentences) < self.create_num:
-            t += 1
+
+        def generate_one():
             a_sentence = ''
             for word in words:
-                if word in self.base_file_mapobj and self.random.random() < self.change_rate:
+                if self.base_file_mapobj.get(word) and self.random.random() < self.change_rate:
                     wi = self.random.randint(0, len(self.base_file_mapobj[word]) - 1)
                     place = self.base_file_mapobj[word][wi]
                 else:
                     place = word
                 a_sentence += place
-            if a_sentence not in sentences:
-                sentences.append(a_sentence)
-            if t > self.create_num * self.loop_t / self.change_rate:
-                break
-        return sentences
+            return a_sentence
+
+        return self._generate_sentences(replace_str, generate_one)
 
 
 def test(test_str, create_num=10, change_rate=0.3):

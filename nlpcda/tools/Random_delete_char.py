@@ -13,30 +13,22 @@ class RandomDeleteChar(Basetool):
         super(RandomDeleteChar, self).__init__('', create_num, change_rate, seed)
 
     def replace(self, replace_str: str):
-        replace_str = replace_str.replace('\n', '').strip()
+        replace_str = self._validate_text(replace_str)
         seg_list = self.jieba.cut(replace_str, cut_all=False)
         words = list(seg_list)
         sentences = [replace_str]
         if len(words) <= 3:
             return sentences
-        t = 0
 
-        while len(sentences) < self.create_num:
-            t += 1
+        def generate_one():
             a_sentence = ''
-            for i, word in enumerate(words[:-1]):
-                word_back = words[i + 1]
-                if i == 0:
-                    a_sentence += self.s1('', word, word_back)
-                else:
-                    word_pre = words[i - 1]
-                    a_sentence += self.s1(word_pre, word, word_back)
+            for i, word in enumerate(words):
+                word_pre = words[i - 1] if i > 0 else ''
+                word_back = words[i + 1] if i + 1 < len(words) else ''
+                a_sentence += self.s1(word_pre, word, word_back)
+            return a_sentence
 
-            if a_sentence not in sentences:
-                sentences.append(a_sentence)
-            if t > self.create_num * self.loop_t / self.change_rate:
-                break
-        return sentences
+        return self._generate_sentences(replace_str, generate_one)
 
     def is_int(self, s: str):
         try:

@@ -16,11 +16,11 @@ class EquivalentChar(Basetool):
 
     def load_paser_base_file(self):
         self.base_file_mapobj = {}
-        for line in open(self.base_file, "r", encoding='utf-8'):
-            equivalent_list = line.strip().split("\t")
-            assert len(equivalent_list) > 1
-            self.add_equivalent_list(equivalent_list)
-        print('load :%s done' % (self.base_file))
+        with open(self.base_file, "r", encoding='utf-8') as source:
+            for line in source:
+                equivalent_list = line.split()
+                if equivalent_list:
+                    self.add_equivalent_list(equivalent_list)
         return self.base_file_mapobj
 
     def add_equivalent_list(self, equivalent_list):
@@ -29,18 +29,21 @@ class EquivalentChar(Basetool):
         :param equivalent_list:
         :return:
         '''
+        if isinstance(equivalent_list, str):
+            raise ValueError('equivalent_list must contain at least two distinct strings')
+        equivalent_list = list(dict.fromkeys(equivalent_list))
+        if len(equivalent_list) < 2 or any(not isinstance(word, str) or not word for word in equivalent_list):
+            raise ValueError('equivalent_list must contain at least two distinct strings')
         num = len(equivalent_list)
         for i in range(num - 1):
             self.base_file_mapobj[equivalent_list[i]] = equivalent_list[:i] + equivalent_list[i + 1:]
         self.base_file_mapobj[equivalent_list[-1]] = equivalent_list[:-1]
 
     def replace(self, replace_str: str):
-        replace_str = replace_str.replace('\n', '').strip()
+        replace_str = self._validate_text(replace_str)
         chars = list(replace_str)
-        sentences = [replace_str]
-        t = 0
-        while len(sentences) < self.create_num:
-            t += 1
+
+        def generate_one():
             a_sentence = ''
             for chrr in chars:
                 if chrr in self.base_file_mapobj and self.random.random() < self.change_rate:
@@ -49,11 +52,9 @@ class EquivalentChar(Basetool):
                 else:
                     place = chrr
                 a_sentence += place
-            if a_sentence not in sentences:
-                sentences.append(a_sentence)
-            if t > self.create_num * self.loop_t / self.change_rate:
-                break
-        return sentences
+            return a_sentence
+
+        return self._generate_sentences(replace_str, generate_one)
 
 
 def test(test_str, create_num=3, change_rate=0.3):

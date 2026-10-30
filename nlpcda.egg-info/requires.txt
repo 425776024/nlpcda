@@ -1,3 +1,0 @@
-jieba
-requests
-bert4keras==0.7.7

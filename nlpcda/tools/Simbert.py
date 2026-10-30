@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import os
-from nlpcda.tools.simbert.generator import SynonymsGenerator
 
 
 class Simbert:
@@ -12,14 +11,23 @@ class Simbert:
         'seed': 1
     }
 
-    def __init__(self, config: dict = {}):
-        if config.get('max_len') is None:
-            config['max_len'] = self._config['max_len']
-        if config.get('seed') is None:
-            config['seed'] = self._config['seed']
-
+    def __init__(self, config: dict = None):
+        config = dict(config or {})
+        if not config.get('model_path'):
+            raise ValueError('Simbert requires config["model_path"] pointing to a local model')
+        for key in ('max_len', 'seed'):
+            if config.get(key) is None:
+                config[key] = self._config[key]
+        if 'CUDA_VISIBLE_DEVICES' in config:
+            os.environ['CUDA_VISIBLE_DEVICES'] = str(config['CUDA_VISIBLE_DEVICES'])
+        try:
+            from nlpcda.tools.simbert.generator import SynonymsGenerator
+        except ImportError as exc:
+            raise ImportError(
+                'Simbert requires optional dependencies: bert4keras, TensorFlow and a compatible Keras. '
+                'Rule-based augmenters do not require these packages.'
+            ) from exc
         self.config = config
-        os.environ["CUDA_VISIBLE_DEVICES"] = config['CUDA_VISIBLE_DEVICES']
         self.model = SynonymsGenerator(config['model_path'], config['max_len'], config['seed'])
 
     def replace(self, sent:str, create_num=5):

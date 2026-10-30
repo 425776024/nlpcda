@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from nlpcda.tools.Basetool import Basetool
+from numbers import Integral
 
 
 class CharPositionExchange(Basetool):
@@ -10,6 +11,8 @@ class CharPositionExchange(Basetool):
     '''
 
     def __init__(self, create_num: int = 5, change_rate: float = 0.05, char_gram: int = 3, seed: int = 1):
+        if isinstance(char_gram, bool) or not isinstance(char_gram, Integral) or char_gram < 1:
+            raise ValueError('char_gram must be a positive integer')
         super(CharPositionExchange, self).__init__('', create_num, change_rate, seed)
         self.char_gram = char_gram
 
@@ -50,19 +53,8 @@ class CharPositionExchange(Basetool):
         return u'\u4e00' <= a_chr <= u'\u9fff'
 
     def replace(self, replace_str: str):
-        replace_str = replace_str.replace('\n', '').strip()
-        sentences = [replace_str]
-        t = 0
-
-        while len(sentences) < self.create_num:
-            t += 1
-            a_sentence = self.__replace_one(replace_str)
-
-            if a_sentence not in sentences:
-                sentences.append(a_sentence)
-            if t > self.create_num * self.loop_t / self.change_rate:
-                break
-        return sentences
+        replace_str = self._validate_text(replace_str)
+        return self._generate_sentences(replace_str, lambda: self.__replace_one(replace_str))
 
 
 def test(test_str, create_num=10, change_rate=0.5):

@@ -16,35 +16,27 @@ class Randomword(Basetool):
 
     def load_paser_base_file(self):
         company_a = []
-        for line in open(self.base_file, "r", encoding='utf-8'):
-            company_a.append(line.replace('\n', ''))
-        print('load :%s done' % (self.base_file))
+        seen = set()
+        with open(self.base_file, "r", encoding='utf-8') as source:
+            for line in source:
+                word = line.strip()
+                if word and word not in seen:
+                    company_a.append(word)
+                    seen.add(word)
+        self._base_words = set(company_a)
+        self.add_words(company_a)
         return company_a
 
     def replace(self, replace_str: str):
-        replace_str = replace_str.replace('\n', '').strip()
+        replace_str = self._validate_text(replace_str)
         seg_list = self.jieba.cut(replace_str, cut_all=False)
         words = list(seg_list)
-        sentences = [replace_str]
-        if len(words) <= 3:
-            return sentences
-        t = 0
-        while len(sentences) < self.create_num:
-            t += 1
-            a_sentence = ''
-            for word in words:
-                a_sentence += self.s1(word)
-
-            if a_sentence not in sentences:
-                sentences.append(a_sentence)
-            if t > self.create_num * self.loop_t / self.change_rate:
-                break
-        return sentences
+        return self._generate_sentences(replace_str, lambda: ''.join(self.s1(word) for word in words))
 
     def s1(self, word: str):
         # 替换所有在combine_dict中的
         if len(word) == 1: return word
-        if word in self.base_file_mapobj and self.random.random() < self.change_rate:
+        if word in self._base_words and self.random.random() < self.change_rate:
             wi = self.random.randint(0, len(self.base_file_mapobj) - 1)
             place = self.base_file_mapobj[wi]
             return place

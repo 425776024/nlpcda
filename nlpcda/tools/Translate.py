@@ -9,11 +9,11 @@ import hashlib
 
 
 # 百度翻译方法
-def baidu_translate(content, appid, secretKey, t_from='en', t_to='zh'):
+def baidu_translate(content, appid, secretKey, t_from='en', t_to='zh', timeout=10):
     # print(content)
     if len(content) > 4891:
         return '输入请不要超过4891个字符！'
-    salt = str(random.randint(0, 50))
+    salt = str(random.SystemRandom().randint(0, 2 ** 32 - 1))
     # 申请网站 http://api.fanyi.baidu.com/api/trans
     # 这里写你自己申请的
     appid = appid
@@ -27,11 +27,18 @@ def baidu_translate(content, appid, secretKey, t_from='en', t_to='zh'):
             'appid': f'{appid}',
             'salt': f'{salt}',
             'sign': f'{sign}'}
-    j = requests.get('http://api.fanyi.baidu.com/api/trans/vip/translate', head)
-    # print(j.json())
-    res = j.json()['trans_result'][0]['dst']
-    # print(res)
-    return res
+    response = requests.get('https://api.fanyi.baidu.com/api/trans/vip/translate',
+                            params=head, timeout=timeout)
+    response.raise_for_status()
+    data = response.json()
+    if 'error_code' in data:
+        raise RuntimeError('Baidu translation error %s: %s' %
+                           (data['error_code'], data.get('error_msg', 'unknown error')))
+    results = data.get('trans_result')
+    if not isinstance(results, list) or not results or any(
+            not isinstance(item, dict) or not isinstance(item.get('dst'), str) for item in results):
+        raise RuntimeError('Baidu translation returned an invalid response')
+    return '\n'.join(item['dst'] for item in results)
 
 
 def test():
