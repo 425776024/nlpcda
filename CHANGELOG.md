@@ -2,6 +2,12 @@
 
 ## 2.5.9 - 2026-10-30
 
+### Added
+
+- Add optional `stopwords` and `set_stopwords()` to all six rule-based augmenters
+  (#32). Protect repeated/overlapping phrases, including matches inside tokenizer
+  tokens; character swaps cannot cross a protected phrase.
+
 ### Fixed
 
 - Preserve the final token in `RandomDeleteChar`, including protected trailing numbers.
@@ -33,6 +39,10 @@
 - Update base dependency constraints and remove committed generated egg metadata.
 - Add regression tests and CI for supported Python versions and major operating
   systems, including tests against the installed wheel outside the source tree.
+- Standardize Python formatting and import order with Ruff, add lint/format checks
+  to CI, and remove bare exception handlers that hid errors in example helpers.
+- Clarify that `Homophone` groups substitutions by pinyin (#34), and document local
+  module shadowing as a cause of import errors (#31).
 - SimBERT model inference and live Baidu translation require external resources;
   regression tests cover their integration boundaries without downloading models or
   making paid translation requests.

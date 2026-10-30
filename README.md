@@ -6,6 +6,7 @@ Python >=3.8。已有安装可运行 `python -m pip install --upgrade nlpcda`。
 
 ### 2.5.9 基础维护更新
 
+新增六种规则增强器通用的 `stopwords` 保护词功能。
 修复随机删除末尾内容丢失、零增强率除零、全局随机状态和分词词典相互影响、
 NER 空行解析及单实体词池报错等问题。基础功能不需要 TensorFlow、Keras 或 NumPy；
 SimBERT 仅在实例化时加载独立安装的模型依赖。完整说明见 [CHANGELOG.md](CHANGELOG.md)。
@@ -26,7 +27,7 @@ pypi:https://pypi.org/project/nlpcda/
 一键中文数据增强工具，支持：
 - [1.随机实体替换](#1随机等价实体替换)
 - [2.近义词](#2随机同义词替换)
-- [3.近义近音字替换](#3随机近义字替换)
+- [3.同音字替换](#3同音字替换)
 - [4.随机字删除（内部细节：数字时间日期片段，内容不会删）](#4随机字删除)
 - [5.NER类 `BIO` 数据增强](#5ner命名实体-数据增强)
 - [6.随机置换邻近的字：**研表究明，汉字序顺并不定一影响文字的阅读理解**<<是乱序的](#6随机置换邻近的字)
@@ -79,21 +80,20 @@ pypi:https://pypi.org/project/nlpcda/
 ```python
 from nlpcda import Randomword
 
-test_str = '''这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击'''
+test_str = """这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击"""
 
 smw = Randomword(create_num=3, change_rate=0.3)
 rs1 = smw.replace(test_str)
 
-print('随机实体替换>>>>>>')
+print("随机实体替换>>>>>>")
 for s in rs1:
     print(s)
-'''
+"""
 随机实体替换>>>>>>
 这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击
 这是个实体：长兴国际；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击
 这是个实体：浙江世宝；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击
-'''
-
+"""
 ```
 
 ### 2.随机同义词替换
@@ -111,26 +111,25 @@ for s in rs1:
 ```python
 from nlpcda import Similarword
 
-test_str = '''这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击'''
+test_str = """这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击"""
 
 smw = Similarword(create_num=3, change_rate=0.3)
 rs1 = smw.replace(test_str)
 
-print('随机同义词替换>>>>>>')
+print("随机同义词替换>>>>>>")
 for s in rs1:
     print(s)
 
-'''
+"""
 随机同义词替换>>>>>>
 这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击
 这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数量增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击
 这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；斯nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击
-'''
-
-
+"""
 ```
 
-### 3.随机近义字替换
+### 3.同音字替换
+按词表中的拼音分组替换字符；当前不包含独立的近音字替换算法。
 参数：
 - base_file ：缺省时使用内置【同义同音字表】，你可以设定/自己指定更加丰富的同义同音字表：
     > 是文本文件路径，内容形如（\t隔开）：\
@@ -144,22 +143,21 @@ for s in rs1:
 ```python
 from nlpcda import Homophone
 
-test_str = '''这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击'''
+test_str = """这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击"""
 
 smw = Homophone(create_num=3, change_rate=0.3)
 rs1 = smw.replace(test_str)
 
-print('随机近义字替换>>>>>>')
+print("随机近义字替换>>>>>>")
 for s in rs1:
     print(s)
 
-'''
+"""
 随机近义字替换>>>>>>
 这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击
 这是个实体：58同城；今填是2020年3月8日11:40，天气晴朗，天气很不错，空气痕好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击
 鷓是个实体：58同乘；今天是2020年3月8日11:40，天迄晴朗，天气很不错，空气很儫，不差；这个nlpcad包，用于方便一键数据增强，犐有效增牆NLP模型的橎化性能、减少波动、抵抗对抗攻击
-'''
-
+"""
 ```
 
 ### 4.随机字删除
@@ -170,22 +168,21 @@ for s in rs1:
 ```python
 from nlpcda import RandomDeleteChar
 
-test_str = '''这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击'''
+test_str = """这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击"""
 
 smw = RandomDeleteChar(create_num=3, change_rate=0.3)
 rs1 = smw.replace(test_str)
 
-print('随机字删除>>>>>>')
+print("随机字删除>>>>>>")
 for s in rs1:
     print(s)
 
-'''
+"""
 随机字删除>>>>>>
 这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击
 这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气，不差；这个nlpcad包用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗
 个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型泛化性能、减少波动、抵抗对抗
-'''
-
+"""
 ```
 
 ### 5.NER命名实体 数据增强
@@ -222,11 +219,14 @@ Ner类参数：
 ```python
 from nlpcda import Ner
 
-ner = Ner(ner_dir_name='ner_data',
-        ignore_tag_list=['O'],
-        data_augument_tag_list=['P', 'LOC','ORG'],
-        augument_size=3, seed=0)
-data_sentence_arrs, data_label_arrs = ner.augment(file_name='0.txt')
+ner = Ner(
+    ner_dir_name="ner_data",
+    ignore_tag_list=["O"],
+    data_augument_tag_list=["P", "LOC", "ORG"],
+    augument_size=3,
+    seed=0,
+)
+data_sentence_arrs, data_label_arrs = ner.augment(file_name="0.txt")
 # 3条增强后的句子、标签 数据，len(data_sentence_arrs)==3
 # 你可以写文件输出函数，用于写出，作为后续训练等
 print(data_sentence_arrs, data_label_arrs)
@@ -242,18 +242,17 @@ print(data_sentence_arrs, data_label_arrs)
 ```python
 from nlpcda import CharPositionExchange
 
-ts = '''这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击'''
-smw = CharPositionExchange(create_num=3, change_rate=0.3,char_gram=3,seed=1)
-rs=smw.replace(ts)
+ts = """这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击"""
+smw = CharPositionExchange(create_num=3, change_rate=0.3, char_gram=3, seed=1)
+rs = smw.replace(ts)
 for s in rs:
     print(s)
 
-'''
+"""
 这是个实体：58同城；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，不差；这个nlpcad包，用于方便一键数据增强，可有效增强NLP模型的泛化性能、减少波动、抵抗对抗攻击
 这实个是体：58城同；今天是2020年3月8日11:40，天气晴朗，天气很不错，空气很好，差不；这个nlpcad包，便用一数方增键强据于，增有效可强NLP模型性泛化的能、动少减波、抵对攻抗抗击
 这是个体实：58城同；今是天2020年3月8日11:40，朗气晴天，天气很错不，空好很气，不差；个这nlpcad包，方便键一据增用数于强，可有效强增NLP模型的性化泛能、动减波少、抗抗击抵对攻
-'''
-
+"""
 ```
 
 ### 7.等价字替换
@@ -270,23 +269,22 @@ for s in rs:
 ```python
 from nlpcda import EquivalentChar
 
-test_str = '''今天是2020年3月8日11:40，天气晴朗，天气很不错。'''
+test_str = """今天是2020年3月8日11:40，天气晴朗，天气很不错。"""
 
 s = EquivalentChar(create_num=3, change_rate=0.3)
 # 添加等价字
-s.add_equivalent_list(['看', '瞅'])
-res=s.replace(test_str)
-print('等价字替换>>>>>>')
+s.add_equivalent_list(["看", "瞅"])
+res = s.replace(test_str)
+print("等价字替换>>>>>>")
 for s in res:
     print(s)
 
-'''
+"""
 等价字替换>>>>>>
 今天是2020年3月8日11:40，天气晴朗，天气很不错。
 今天是二〇2〇年3月八日1①:4〇，天气晴朗，天气很不错。
 今天是二0贰零年3月捌日11:40，天气晴朗，天气很不错
-'''
-
+"""
 ```
 
 ### 添加自定义词典
@@ -300,12 +298,25 @@ from nlpcda import Ner
 from nlpcda import CharPositionExchange
 
 augmenter = Randomword()
-augmenter.add_word('小明')
-augmenter.add_words(['小明','小白','天地良心'])
+augmenter.add_word("小明")
+augmenter.add_words(["小明", "小白", "天地良心"])
 # Similarword，Homophone，RandomDeleteChar 同上
-
 ```
 
+
+### 保护词与短语（stopwords）
+
+六种规则增强器均支持 `stopwords`，用于保护否定词、实体、日期或指定短语。
+按原文做区分大小写的字面匹配，重复和重叠匹配都会受到保护。
+词级增强会保护与短语相交的整个分词；字符交换不会跨越保护短语。
+
+```python
+from nlpcda import Homophone
+
+augmenter = Homophone(stopwords=["不支持退款", "58同城"], seed=42)
+results = augmenter.replace("58同城的这个订单不支持退款，请联系客服。")
+augmenter.set_stopwords(["订单"])  # 更新保护词；无参数调用可清空
+```
 
 ### 8.翻译互转实现的增强
 1.百度中英翻译互转实现的增强
@@ -316,13 +327,12 @@ note:
 ```python
 from nlpcda import baidu_translate
 
-zh = '天气晴朗，天气很不错，空气很好'
+zh = "天气晴朗，天气很不错，空气很好"
 # 申请你的 appid、secretKey
 # 两遍洗数据法（回来的中文一般和原来不一样，要是一样，就不要了，靠运气？）
-en_s = baidu_translate(content=zh, appid='xxx', secretKey='xxx',t_from='zh', t_to='en')
-zh_s = baidu_translate(content=en_s, appid='xxx', secretKey='xxx',t_from='en', t_to='zh')
+en_s = baidu_translate(content=zh, appid="xxx", secretKey="xxx", t_from="zh", t_to="en")
+zh_s = baidu_translate(content=en_s, appid="xxx", secretKey="xxx", t_from="en", t_to="zh")
 print(zh_s)
-
 ```
 
 2.谷歌翻译互转实现的增强
@@ -336,11 +346,12 @@ pip 包：[py-googletrans](https://py-googletrans.readthedocs.io/en/latest/)
 pip install googletrans
 ```python
 from googletrans import Translator
-def googletrans(content='一个免费的谷歌翻译API', t_from='zh-cn', t_to='en'):
-    translator = Translator()
-    s = translator.translate(text=content, dest=t_to,src=t_from)
-    return s.text
 
+
+def googletrans(content="一个免费的谷歌翻译API", t_from="zh-cn", t_to="en"):
+    translator = Translator()
+    s = translator.translate(text=content, dest=t_to, src=t_from)
+    return s.text
 ```
 
 
@@ -378,25 +389,24 @@ tensorflow-gpu==1.13.1
 ```
 ```python
 from nlpcda import Simbert
+
 config = {
-        'model_path': '/xxxx/chinese_simbert_L-12_H-768_A-12',
-        'CUDA_VISIBLE_DEVICES': '0,1',
-        'max_len': 32,
-        'seed': 1
+    "model_path": "/xxxx/chinese_simbert_L-12_H-768_A-12",
+    "CUDA_VISIBLE_DEVICES": "0,1",
+    "max_len": 32,
+    "seed": 1,
 }
 simbert = Simbert(config=config)
-sent = '把我的一个亿存银行安全吗'
+sent = "把我的一个亿存银行安全吗"
 synonyms = simbert.replace(sent=sent, create_num=5)
 print(synonyms)
-'''
+"""
 [('我的一个亿，存银行，安全吗', 0.9871675372123718), 
 ('把一个亿存到银行里安全吗', 0.9352194666862488), 
 ('一个亿存银行安全吗', 0.9330801367759705), 
 ('一个亿的存款存银行安全吗', 0.92387855052948),
  ('我的一千万存到银行安不安全', 0.9014463424682617)]
-'''
-
-
+"""
 ```
 
 ## 开发与发布验证
@@ -406,11 +416,21 @@ python -m pip install . build twine
 python -m unittest discover -s tests -v
 python -m build
 python -m twine check dist/*
+python -m pip install ruff
+python -m ruff check .
+python -m ruff format --check .
 ```
 
 CI 在 Linux 的 Python 3.8–3.14，以及 Windows/macOS 的 Python 3.12 上检查
 安装后的包。SimBERT 模型推理与百度翻译在线请求需要另行准备模型或服务凭据，
 不属于离线回归测试的覆盖范围。
+
+### 常见导入问题
+
+请勿把自己的脚本或工作目录下的文件命名为 `nlpcda.py`，也应避免创建与本库同名的
+本地目录。它们可能遮蔽已安装的包，导致 `cannot import name 'Ner'` 等错误。
+可运行 `python -c "import nlpcda; print(nlpcda.__file__)"` 检查实际导入路径。
+更名后清理对应的本地 `__pycache__` 再重新运行。
 
 ## Star History
 
