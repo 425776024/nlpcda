@@ -12,8 +12,9 @@ class BackendTests(unittest.TestCase):
         generator = types.ModuleType("nlpcda.tools.simbert.generator")
         generator.SynonymsGenerator = Mock()
         config = {"model_path": "/local/model"}
-        with patch.dict(sys.modules, {"nlpcda.tools.simbert.generator": generator}), patch.dict(
-            os.environ, {}, clear=False
+        with (
+            patch.dict(sys.modules, {"nlpcda.tools.simbert.generator": generator}),
+            patch.dict(os.environ, {}, clear=False),
         ):
             os.environ.pop("CUDA_VISIBLE_DEVICES", None)
             model = Simbert(config)

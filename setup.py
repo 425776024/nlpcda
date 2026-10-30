@@ -27,10 +27,10 @@ setup(
     include_package_data=False,
     package_data={"nlpcda": ["data/*.txt"]},
     platforms="any",
-    python_requires=">=3.8",
+    python_requires=">=3.10",
     project_urls={
         "Source": "https://github.com/425776024/nlpcda",
         "Issues": "https://github.com/425776024/nlpcda/issues",
     },
-    install_requires=["jieba>=0.42.1", "requests>=2.32.4"],
+    install_requires=["jieba>=0.42.1", "requests>=2.33.0"],
 )

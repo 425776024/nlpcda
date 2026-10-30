@@ -1,3 +1,3 @@
-requests>=2.32.4
+requests>=2.33.0
 jieba>=0.42.1
 # Simbert requires separately installed, compatible bert4keras/TensorFlow/Keras.

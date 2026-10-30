@@ -2,7 +2,7 @@
 
 使用：`pip install nlpcda`
 
-Python >=3.8。已有安装可运行 `python -m pip install --upgrade nlpcda`。
+Python >=3.10。已有安装可运行 `python -m pip install --upgrade nlpcda`。
 
 ### 2.5.9 基础维护更新
 
@@ -421,7 +421,7 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-CI 在 Linux 的 Python 3.8–3.14，以及 Windows/macOS 的 Python 3.12 上检查
+CI 在 Linux 的 Python 3.10–3.14，以及 Windows/macOS 的 Python 3.12 上检查
 安装后的包。SimBERT 模型推理与百度翻译在线请求需要另行准备模型或服务凭据，
 不属于离线回归测试的覆盖范围。
 

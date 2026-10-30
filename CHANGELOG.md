@@ -34,9 +34,11 @@
 
 ### Packaging and validation
 
-- Align package/version metadata, declare Python >=3.8, align the license metadata
+- Align package/version metadata, declare Python >=3.10, align the license metadata
   with the existing Apache-2.0 license, and build both wheels and source archives.
 - Update base dependency constraints and remove committed generated egg metadata.
+- Require Requests >=2.33.0 to exclude known vulnerable versions. This dependency
+  requires Python >=3.10; older interpreters are not supported by this release.
 - Add regression tests and CI for supported Python versions and major operating
   systems, including tests against the installed wheel outside the source tree.
 - Standardize Python formatting and import order with Ruff, add lint/format checks
